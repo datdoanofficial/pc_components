@@ -56,3 +56,26 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Use the `providedIn: 'root'` option for singleton services
 - Prefer the `@Service` decorator over `@Injectable({providedIn: 'root'})` for new singleton services (Angular v22+)
 - Use the `inject()` function instead of constructor injection
+
+## Project Context & Styling Guidelines
+
+- **Project Tech Stack:** Spring Boot (Backend), Angular Zoneless (Frontend), Tailwind CSS (Styling), PostgreSQL.
+- **Styling Preference:**
+  - Strictly use **Tailwind CSS** utility classes for all component styling.
+  - Do NOT write custom CSS/SCSS files unless defining global CSS variables or complex animations in `src/styles.css`.
+  - Do NOT use `@apply` directives inside individual component CSS; apply Tailwind classes directly in `template`.
+  - Use `class` bindings for conditional classes (e.g., `[class.bg-blue-500]="isActive()"`).
+
+## API & Backend Integration
+
+- Base API URL is configured for Spring Boot (`http://localhost:8080/api`).
+- Use `provideHttpClient()` in `app.config.ts` for HTTP operations.
+- Always use Angular Signals for handling async HTTP responses directly inside services or components.
+- Strongly type all API response interfaces inside feature-specific model files (e.g., `product.model.ts`).
+
+## Zoneless & Architecture Rules
+
+- The application runs in **Zoneless** mode using `provideZonelessChangeDetection()`.
+- Do NOT rely on automatic zone-based change detection or `Zone.js`.
+- Always trigger state updates via `signal.set()`, `signal.update()`, or `linkedSignal()`.
+- Structure the project using **Feature-driven architecture**: Place components, services, and models inside `src/app/features/<feature-name>/`.

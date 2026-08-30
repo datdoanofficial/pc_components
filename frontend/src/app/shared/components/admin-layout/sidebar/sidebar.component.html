@@ -1,0 +1,42 @@
+<div class="w-full h-full border-r border-[#161616] px-5">
+  <ul class="w-full">
+    <!-- logo -->
+    <a routerLink="/" class="w-full flex justify-center items-center mb-[60px] mt-5">
+      <img [src]="logoUrl" alt="" class="ml-[10px] w-[80%] object-cover cursor-pointer" />
+    </a>
+
+    <!-- nav items -->
+    @for (item of navItems; track item.path) {
+      <a [routerLink]="item.path" routerLinkActive="bg-[#161616]" class="no-underline block">
+        <li
+          class="w-full h-[50px] font-sans font-light text-base flex items-center pl-10 list-none mb-[10px] rounded-[5px] text-[var(--text-color)] transition duration-500 hover:bg-[#161616]"
+        >
+          <span [class]="item.icon + ' icon mr-[10px] ' + item.iconClass"></span>
+          {{ item.label }}
+        </li>
+      </a>
+    }
+
+    <!-- footer -->
+    <div class="mt-[60px]">
+      <a routerLink="/admin/settings" routerLinkActive="bg-[#161616]" class="no-underline block">
+        <li
+          class="w-full h-[50px] font-sans font-light text-base flex items-center pl-10 list-none mb-[10px] rounded-[5px] text-[var(--text-color)] transition duration-500 hover:bg-[#161616]"
+        >
+          <span class="solar--settings-broken icon mr-[10px] text-[25px] ml-[1px]"></span>
+          Settings
+        </li>
+      </a>
+
+      <button
+        class="w-full h-[50px] bg-transparent outline-none border-none cursor-pointer"
+        (click)="handleLogout()"
+      >
+        <li class="flex items-center pl-10 list-none text-[var(--text-color)]">
+          <span class="solar--logout-2-broken icon mr-[10px] text-[23px]"></span>
+          Logout
+        </li>
+      </button>
+    </div>
+  </ul>
+</div>

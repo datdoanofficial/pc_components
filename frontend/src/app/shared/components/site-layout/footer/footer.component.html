@@ -1,0 +1,92 @@
+<div #footerRef class="absolute w-full h-fit bg-black overflow-hidden flex flex-col items-center z-[1000]">
+
+  <!-- header-footer (hiệu ứng bo cong khi scroll tới footer) -->
+  <div
+    #headerFooterRef
+    class="w-[120%] bg-[#101010] rounded-t-[50%/100%]"
+    [style.height]="headerFooterHeight()"
+    style="transition: height 0.1s ease;"
+  ></div>
+
+  <!-- footer-heading: chỉ hiện ở mobile (≤1024px), ẩn desktop -->
+  <div class="hidden max-lg:flex pt-4 w-full flex-col justify-center items-center bg-[#101010]">
+    <a routerLink="/">
+      <img src="assets/images/logo.webp" alt="Logo" class="w-20 aspect-[2.5/1]" />
+    </a>
+    <div class="w-fit text-[0.5rem] font-sans font-light max-md:font-normal flex items-center justify-center">
+      <span>Design and Development</span>
+      <img src="assets/images/datdoan.webp" alt="" class="w-[15%] max-[576px]:w-[17%]" />
+    </div>
+  </div>
+
+  <!-- footer-contain -->
+  <div class="w-full h-40 px-12 max-lg:px-16 max-md:px-10 max-[576px]:h-52 max-[480px]:h-[25rem] max-[480px]:px-[4.5rem] pb-[2.7rem] bg-[#101010] grid grid-cols-[1fr_1.8fr_1fr] max-lg:grid-cols-[1.5fr_1fr] max-[576px]:grid-cols-[1fr_1.2fr] max-[480px]:grid-cols-1 gap-0">
+
+    <!-- header-wrapper: ẩn ở ≤1024px vì đã có footer-heading thay thế -->
+    <div class="relative flex flex-col justify-center pt-[0.2rem] w-full h-full max-lg:hidden">
+      <a routerLink="/">
+        <img src="assets/images/logo.webp" alt="Logo" class="w-20 aspect-[2.5/1] mb-4" />
+      </a>
+      <div class="text-white text-[0.5rem] max-[1240px]:text-[0.45rem] font-sans font-light max-md:font-normal mt-2 flex items-center">
+        <span>Design and Development</span>
+        <img src="assets/images/datdoan.webp" alt="" class="w-[25%]" />
+      </div>
+    </div>
+
+    <!-- main-content -->
+    <div class="w-full h-full font-sans font-light max-md:font-normal text-[0.5rem] max-[1240px]:text-[0.48rem] grid grid-cols-2 max-[576px]:flex max-[576px]:flex-col max-[480px]:items-center">
+
+      <!-- infor -->
+      <div class="flex items-center max-[480px]:items-center">
+        <ul class="text-[#8a8a8a]">
+          <li class="list-none mb-[1.2rem] max-[576px]:mb-2 max-[480px]:mb-[0.8rem] max-[480px]:flex max-[480px]:flex-col max-[480px]:items-center">
+            <a href="mailto:datdoanofficial@gmail.com" class="text-[#8a8a8a] no-underline text-[0.5rem] max-[1240px]:text-[0.48rem] max-[576px]:text-[0.6rem] max-[480px]:text-[0.7rem] transition duration-500 hover:text-[var(--primary-light)]">
+              datdoanofficial&#64;gmail.com
+            </a>
+          </li>
+          <li class="list-none mb-[1.2rem] max-[576px]:mb-2 max-[480px]:mb-[0.8rem] max-[480px]:flex max-[480px]:flex-col max-[480px]:items-center">
+            <a href="tel:(+84)916709786" class="text-[#8a8a8a] no-underline text-[0.5rem] max-[1240px]:text-[0.48rem] max-[576px]:text-[0.6rem] max-[480px]:text-[0.7rem] transition duration-500 hover:text-[var(--primary-light)]">
+              (+84) 916 709 786
+            </a>
+          </li>
+          <li class="list-none last:mb-0 max-[480px]:flex max-[480px]:flex-col max-[480px]:items-center">
+            <p>Ho Chi Minh City - Viet Nam</p>
+          </li>
+        </ul>
+      </div>
+
+      <!-- links -->
+      <div class="flex items-center max-[576px]:mt-2 max-[480px]:mt-[0.8rem]">
+        <ul class="text-[#8a8a8a]">
+          <li class="list-none mb-[1.2rem] max-[576px]:mb-2 max-[480px]:mb-[0.8rem] max-[480px]:flex max-[480px]:flex-col max-[480px]:items-center">
+            <a href="/" class="text-[#8a8a8a] no-underline text-[0.5rem] max-[576px]:text-[0.6rem] max-[480px]:text-[0.7rem] transition duration-500 hover:text-[var(--primary-light)]">Privacy Policy</a>
+          </li>
+          <li class="list-none mb-[1.2rem] max-[576px]:mb-2 max-[480px]:mb-[0.8rem] max-[480px]:flex max-[480px]:flex-col max-[480px]:items-center">
+            <a href="/" class="text-[#8a8a8a] no-underline text-[0.5rem] max-[576px]:text-[0.6rem] max-[480px]:text-[0.7rem] transition duration-500 hover:text-[var(--primary-light)]">Terms &amp; Conditions</a>
+          </li>
+          <li class="list-none text-[0.5rem]">&copy; Next In | All rights reserved</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- send-mail -->
+    <div class="w-full h-full flex flex-col justify-center pt-2 font-sans max-[576px]:pt-0 max-[576px]:-mt-2 max-[480px]:items-center">
+      <div class="text-white text-[0.7rem] max-[1240px]:text-[0.65rem] max-[576px]:text-[0.8rem] max-[480px]:text-[1rem] font-medium uppercase mb-[0.8rem] max-[576px]:mb-[1.2rem]">
+        Be the first to know
+      </div>
+      <p class="font-light max-md:font-normal text-[0.45rem] max-[1240px]:text-[0.45rem] max-[576px]:text-[0.6rem] max-[480px]:text-[0.7rem] leading-[0.8rem] max-[576px]:leading-4 max-[480px]:leading-[1.2rem] text-[#8a8a8a] mb-[0.8rem] max-[576px]:mb-[1.2rem] max-[480px]:text-center">
+        Get special offers, exclusive product news, and event info straight to your inbox.
+      </p>
+      <div class="w-full aspect-[4/0.65] flex bg-[#1a1a1a] rounded-[2rem]">
+        <input
+          type="text"
+          placeholder="Enter your email"
+          class="w-full h-full bg-transparent border-none outline-none text-[var(--text-color)] px-[0.8rem] max-[576px]:px-[1.2rem] max-[480px]:px-6 text-[0.45rem] max-[1240px]:text-[0.4rem] max-[576px]:text-[0.6rem] max-[480px]:text-[0.75rem] font-sans font-light max-md:font-normal"
+        />
+        <button class="h-full aspect-square flex justify-center items-center bg-[var(--primary-color)] outline-none border-none text-white rounded-full">
+          <span class="ph--arrow-right-bold text-[0.8rem] max-[576px]:text-[1.1rem]"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

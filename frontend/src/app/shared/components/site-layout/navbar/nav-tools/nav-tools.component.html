@@ -1,0 +1,151 @@
+<div class="relative h-full flex items-center align-center">
+  <span
+    class="carbon--search text-[1.1rem] mr-[0.7rem] cursor-pointer transition duration-500 hover:text-[var(--primary-color)]"
+  ></span>
+
+  <div class="relative flex items-center p-[0.1rem] cursor-pointer group" (click)="toggleCart()">
+    <span
+      class="solar--bag-4-outline text-[1.2rem] transition duration-500 group-hover:!bg-[var(--primary-color)]"
+    ></span>
+    <span
+      class="absolute top-[0.7rem] right-0 w-[0.6rem] aspect-square flex items-center justify-center bg-[var(--primary-color)] text-[var(--text-color)] text-[0.3rem] rounded-full"
+      >{{ cartProducts().length }}</span
+    >
+  </div>
+
+  <div class="cursor-pointer relative hidden max-md:block ml-4 h-4 z-[1]" (click)="toggleMenu()">
+    <span
+      class="block w-4 h-[0.1rem] bg-[var(--text-color)] relative top-[45%] rounded-full transition-all duration-300"
+      [class.bg-transparent]="isMenuOpen()"
+    ></span>
+
+    <div
+      class="absolute top-11 right-0 bg-[#161616] px-2 py-4 font-sans font-light uppercase text-[0.7rem] rounded-lg shadow-md transition-all duration-300"
+      [class.opacity-100]="isMenuOpen()"
+      [class.visible]="isMenuOpen()"
+      [class.opacity-0]="!isMenuOpen()"
+      [class.invisible]="!isMenuOpen()"
+      [class.translate-y-0]="isMenuOpen()"
+      [class.-translate-y-4]="!isMenuOpen()"
+    >
+      <ul>
+        @for (item of menuLinks; track item.path) {
+          <li class="list-none">
+            <a
+              [routerLink]="item.path"
+              class="block px-4 py-2 text-[var(--text-color)] cursor-pointer hover:text-[var(--primary-color)]"
+              >{{ item.label }}</a
+            >
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+
+  <a
+    routerLink="/login"
+    class="max-md:hidden flex items-center justify-center w-[3.6rem] h-[1.3rem] text-[0.45rem] ml-4 uppercase bg-[var(--primary-color)] rounded-full text-[var(--text-color)] font-sans font-light no-underline transition-all duration-500 hover:bg-[var(--hover-color)]"
+    >sign in</a
+  >
+
+  <div
+    class="fixed right-0 top-0 h-screen bg-[#161616] w-[15rem] px-[1.2rem] pt-4 z-[100] rounded-[1.6rem] transition-transform duration-500 ease-in-out"
+    [class.translate-x-full]="!isCartOpen()"
+    [class.translate-x-0]="isCartOpen()"
+  >
+    <div class="relative w-full h-full">
+      <div class="flex justify-between items-center mb-[0.8rem]">
+        <div class="text-base font-normal">Shopping Cart</div>
+        <span
+          class="aspect-square h-full cursor-pointer flex items-center justify-center text-[var(--text-color)] text-[0.8rem] transition duration-500 p-[0.4rem] rounded-full hover:bg-[var(--text-color)] hover:text-[#2a2a2a]"
+          (click)="toggleCart()"
+          ><span class="line-md--remove"></span
+        ></span>
+      </div>
+
+      <div
+        class="relative w-full h-[63vh] max-h-full overflow-y-auto [&::-webkit-scrollbar]:w-[0.2rem] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-white/20 [&::-webkit-scrollbar-thumb]:rounded"
+      >
+        @if (cartProducts().length === 0) {
+          <div class="mt-[0.7rem] flex flex-col items-center font-sans font-light">
+            <img src="assets/images/cart-page/aww.webp" alt="" class="w-[15%] object-cover" />
+            <p class="text-[0.6rem] mt-2">Your cart is empty.</p>
+            <a
+              href="/store"
+              class="mt-[0.8rem] block px-[0.9rem] py-[0.4rem] bg-[var(--primary-color)] text-[0.4rem] text-[var(--text-color)] no-underline font-light font-sans uppercase rounded-2xl transition duration-500 hover:bg-[var(--hover-color)]"
+              >discover more</a
+            >
+          </div>
+        } @else {
+          @for (product of cartProducts(); track product.id; let i = $index) {
+            <div class="flex bg-[#2a2a2a] rounded-lg pl-[0.3rem] h-16 mt-[0.2rem] first:mt-0">
+              <div class="w-[40%] flex items-center p-[0.3rem]">
+                <img
+                  [src]="product.image"
+                  [alt]="product.name"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+
+              <div class="w-[80%] text-[0.5rem] px-[0.3rem] py-2">
+                <div
+                  class="text-[0.45rem] font-sans font-medium mb-2 cursor-pointer transition duration-500 hover:text-[#8a8a8a]"
+                  [title]="product.name"
+                >
+                  {{ truncateName(product.name, 32) }}
+                </div>
+                <div class="text-[0.45rem]">
+                  <div class="mb-[0.2rem]">
+                    <span class="text-[#8a8a8a]">Brand:</span> {{ product.brand }}
+                  </div>
+                  <div><span class="text-[#8a8a8a]">Guarantee:</span> {{ product.guarantee }}</div>
+                </div>
+              </div>
+
+              <div class="flex flex-col items-center pr-2 pt-[0.3rem]">
+                <div
+                  class="flex justify-center items-center w-6 aspect-square text-[0.8rem] mb-[0.35rem] rounded-full transition duration-500 cursor-pointer hover:bg-[var(--text-color)] hover:text-[#2a2a2a]"
+                  (click)="handleRemoveProduct(product.id)"
+                >
+                  <span class="fluent--delete-48-regular"></span>
+                </div>
+
+                <div class="text-[0.45rem] font-medium">
+                  <app-quantity-btn
+                    [initialQuantity]="quantities()[i]"
+                    [showTitle]="false"
+                    (quantityChange)="handleQuantityChange(product.id, $event)"
+                  />
+                  <div class="flex justify-center font-medium text-[var(--primary-light)]">
+                    ${{ (product.price * quantities()[i]).toFixed(2) }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+        }
+      </div>
+
+      <div class="absolute bottom-0 pb-4 w-full bg-[#161616] z-[1]">
+        <div class="font-normal mt-2 text-[0.7rem] flex items-center justify-between">
+          <p>Subtotal</p>
+          <div class="text-[var(--primary-color)] font-normal">${{ totalPrice().toFixed(2) }}</div>
+        </div>
+        <button
+          class="mt-[0.8rem] w-full h-[1.8rem] text-[0.5rem] font-sans font-light text-[var(--text-color)] bg-[var(--primary-color)] border-none outline-none uppercase rounded-full transition duration-500 cursor-pointer hover:bg-[var(--hover-color)] disabled:bg-[var(--hover-color)] disabled:cursor-not-allowed"
+          [disabled]="cartProducts().length === 0"
+          (click)="handleCheckout()"
+        >
+          check out
+        </button>
+      </div>
+    </div>
+  </div>
+
+  @if (isCartOpen()) {
+    <div
+      class="fixed top-0 left-0 w-full h-screen bg-black/50 z-[99] cursor-pointer"
+      (click)="toggleCart()"
+    ></div>
+  }
+</div>

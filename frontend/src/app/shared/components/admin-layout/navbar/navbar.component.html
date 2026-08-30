@@ -1,0 +1,71 @@
+<div class="relative w-full h-[15%] flex justify-between items-center">
+  <!-- welcome -->
+  <div class="text-[1.1vw] font-light text-[#5a5a5a]">
+    <span class="text-[var(--text-color)] text-[2.2vw] font-normal">Hello, Admin</span>
+    <br />
+    <div class="mt-[0.8vw]">Welcome to Dashboard</div>
+  </div>
+
+  <!-- search box -->
+  <div
+    class="absolute top-1/2 left-[45%] -translate-x-1/2 -translate-y-1/2 w-[35%] h-[4vw] flex items-center justify-between bg-[#161616] rounded-full pl-[1.5vw]"
+  >
+    <input
+      type="text"
+      placeholder="Search"
+      class="w-[90%] h-full font-sans font-light border-none outline-none pr-[2vw] pl-[0.3vw] text-[0.5rem] text-[var(--text-color)] bg-transparent"
+    />
+    <span class="carbon--search text-[0.7rem] text-[#8a8a8a]"></span>
+  </div>
+
+  <!-- toolbar -->
+  <div class="w-fit flex items-center">
+    <!-- messages -->
+    <div
+      class="relative p-[0.8vw] mr-[1vw] flex justify-center items-center rounded-full bg-[#161616] cursor-pointer group"
+    >
+      <span
+        class="ant-design--message-outlined text-[2vw] text-[var(--text-color)] pointer-events-none transition duration-500 group-hover:text-[#8a8a8a]"
+      ></span>
+      <span
+        class="absolute top-[3vw] -right-[1vw] -translate-x-1/2 -translate-y-1/2 text-[0.3rem] w-[1.2vw] h-[1.2vw] flex justify-center items-center rounded-full bg-[var(--primary-color)] z-[1]"
+        >{{ messageCount }}</span
+      >
+    </div>
+
+    <!-- notification -->
+    <div
+      class="relative p-[0.8vw] mr-[1vw] flex justify-center items-center rounded-full bg-[#161616] cursor-pointer group"
+    >
+      <span
+        class="ph--bell text-[2vw] text-[var(--text-color)] pointer-events-none transition duration-500 group-hover:text-[#8a8a8a]"
+      ></span>
+      <span
+        class="absolute top-[3vw] -right-[1vw] -translate-x-1/2 -translate-y-1/2 text-[0.3rem] w-[1.2vw] h-[1.2vw] flex justify-center items-center rounded-full bg-[var(--primary-color)] z-[1]"
+        >{{ notificationCount }}</span
+      >
+    </div>
+
+    <!-- profile -->
+    <div class="font-sans font-light text-[0.5rem] flex">
+      <img
+        [src]="avatarUrl"
+        alt=""
+        class="w-[3.5vw] h-[3.5vw] rounded-full object-cover mr-[1vw]"
+      />
+      <div class="relative w-fit h-[3.5vw] flex items-center cursor-pointer z-[100] group">
+        <div
+          class="relative w-full h-[1.4rem] flex flex-col justify-between items-start mr-[0.1rem]"
+        >
+          <div class="text-[0.4rem] font-light text-[#5a5a5a] group-hover:text-[#8a8a8a]">
+            {{ userRole }}
+          </div>
+          <span class="text-[0.5rem] font-normal group-hover:text-[#8a8a8a]">{{ userName }}</span>
+        </div>
+        <span
+          class="tabler--chevron-down text-[var(--text-color)] group-hover:text-[#8a8a8a]"
+        ></span>
+      </div>
+    </div>
+  </div>
+</div>

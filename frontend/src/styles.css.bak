@@ -1,5 +1,3 @@
-@import "tailwindcss";
-
 @import url('https://fonts.googleapis.com/css2?family=Pontano+Sans:wght@300..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
@@ -57,7 +55,7 @@ body {
   overscroll-behavior: none;
 }
 
-/* search icon     <span className="carbon--search"></span> */
+// search icon     <span className="carbon--search"></span>
 .carbon--search {
   display: inline-block;
   width: 1em;
@@ -72,7 +70,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* shopping bag icon     <span className="solar--bag-4-outline"></span> */
+// shopping bag icon     <span className="solar--bag-4-outline"></span>
 .solar--bag-4-outline {
   display: inline-block;
   width: 1em;
@@ -87,7 +85,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* play icon   <span className="basil--play-solid"></span> */
+// play icon   <span className="basil--play-solid"></span>
 .basil--play-solid {
   display: inline-block;
   width: 1em;
@@ -102,7 +100,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* chevron left    <span className="tabler--chevron-left"></span> */
+// chevron left    <span className="tabler--chevron-left"></span>
 .tabler--chevron-left {
   display: inline-block;
   width: 1em;
@@ -117,7 +115,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* chevron right    <span className="tabler--chevron-right"></span> */
+// chevron right    <span className="tabler--chevron-right"></span>
 .tabler--chevron-right {
   display: inline-block;
   width: 1em;
@@ -132,7 +130,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* chevron down    <span className="tabler--chevron-down"></span> */
+// chevron down    <span className="tabler--chevron-down"></span>
 .tabler--chevron-down {
   display: inline-block;
   width: 1em;
@@ -147,7 +145,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* heart icon   <span className="solar--heart-outline"></span> */
+// heart icon   <span className="solar--heart-outline"></span>
 
 .solar--heart-outline {
   display: inline-block;
@@ -163,7 +161,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* dollar icon   <span className="pepicons-pop--dollar"></span> */
+// dollar icon   <span className="pepicons-pop--dollar"></span>
 .pepicons-pop--dollar {
   display: inline-block;
   width: 1em;
@@ -178,7 +176,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* check icon    <span className="tabler--check"></span> */
+// check icon    <span className="tabler--check"></span>
 .tabler--check {
   display: inline-block;
   width: 1em;
@@ -193,7 +191,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* arrow right icon   <span className="ph--arrow-right-bold"></span> */
+// arrow right icon   <span className="ph--arrow-right-bold"></span>
 .ph--arrow-right-bold {
   display: inline-block;
   width: 1em;
@@ -208,7 +206,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* arrow left icon   <span className="ph--arrow-left-bold"></span> */
+// arrow left icon   <span className="ph--arrow-left-bold"></span>
 .ph--arrow-left-bold {
   display: inline-block;
   width: 1em;
@@ -223,7 +221,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* arrow left thin   <span className="ph--arrow-left-thin"></span> */
+// arrow left thin   <span className="ph--arrow-left-thin"></span>
 .ph--arrow-left-thin {
   display: inline-block;
   width: 1em;
@@ -238,7 +236,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* order bill icon   <span className="solar--bill-list-bold"></span> */
+// order bill icon   <span className="solar--bill-list-bold"></span>
 .solar--bill-list-bold {
   display: inline-block;
   width: 1em;
@@ -253,7 +251,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* arrow up    <span className="tabler--arrow-up"></span> */
+// arrow up    <span className="tabler--arrow-up"></span>
 .tabler--arrow-up {
   display: inline-block;
   width: 1em;
@@ -268,7 +266,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* account service icon     <span className="mdi--account-service"></span> */
+// account service icon     <span className="mdi--account-service"></span>
 .mdi--account-service {
   display: inline-block;
   width: 1em;
@@ -283,7 +281,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* report icon   <span className="ic--round-report"></span> */
+// report icon   <span className="ic--round-report"></span>
 .ic--round-report {
   display: inline-block;
   width: 1em;
@@ -298,7 +296,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* shipping icon    <span className="ic--round-local-shipping"></span> */
+// shipping icon    <span className="ic--round-local-shipping"></span>
 .ic--round-local-shipping {
   display: inline-block;
   width: 1em;
@@ -313,7 +311,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* box icon    <span className="solar--box-bold"></span> */
+// box icon    <span className="solar--box-bold"></span>
 .solar--box-bold {
   display: inline-block;
   width: 1em;
@@ -328,7 +326,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* renew icon    <span className="material-symbols--autorenew-rounded"></span> */
+// renew icon    <span className="material-symbols--autorenew-rounded"></span>
 .material-symbols--autorenew-rounded {
   display: inline-block;
   width: 1em;
@@ -343,7 +341,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* discount icon   <span className="iconamoon--discount-fill"></span> */
+// discount icon   <span className="iconamoon--discount-fill"></span>
 .iconamoon--discount-fill {
   display: inline-block;
   width: 1em;
@@ -358,7 +356,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* www icon   <span className="iconoir--www"></span> */
+// www icon   <span className="iconoir--www"></span>
 .iconoir--www {
   display: inline-block;
   width: 1em;
@@ -373,7 +371,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* login duotone icon   <span className="solar--login-3-bold-duotone"></span> */
+// login duotone icon   <span className="solar--login-3-bold-duotone"></span>
 .solar--login-3-bold-duotone {
   display: inline-block;
   width: 1em;
@@ -388,7 +386,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* user icon duotone   <span className="solar--user-plus-bold-duotone"></span> */
+// user icon duotone   <span className="solar--user-plus-bold-duotone"></span>
 .solar--user-plus-bold-duotone {
   display: inline-block;
   width: 1em;
@@ -403,7 +401,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* home icon duotone   <span className="solar--home-smile-bold-duotone"></span> */
+// home icon duotone   <span className="solar--home-smile-bold-duotone"></span>
 .solar--home-smile-bold-duotone {
   display: inline-block;
   width: 1em;
@@ -418,7 +416,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* star rating icon   <span className="mage--star-fill"></span> */
+// star rating icon   <span className="mage--star-fill"></span>
 .mage--star-fill {
   display: inline-block;
   width: 1em;
@@ -433,7 +431,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* minus icon   <span className="tabler--minus"></span> */
+// minus icon   <span className="tabler--minus"></span>
 .tabler--minus {
   display: inline-block;
   width: 1em;
@@ -448,7 +446,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* plus icon   <span className="tabler--plus"></span> */
+// plus icon   <span className="tabler--plus"></span>
 .tabler--plus {
   display: inline-block;
   width: 1em;
@@ -463,7 +461,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* external link icon    <span className="ci--external-link"></span> */
+// external link icon    <span className="ci--external-link"></span>
 .ci--external-link {
   display: inline-block;
   width: 1em;
@@ -478,7 +476,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* close icon     <span className="line-md--remove"></span> */
+// close icon     <span className="line-md--remove"></span>
 
 .line-md--remove {
   display: inline-block;
@@ -494,7 +492,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* delete icon    <span className="fluent--delete-48-regular"></span> */
+// delete icon    <span className="fluent--delete-48-regular"></span>
 
 .fluent--delete-48-regular {
   display: inline-block;
@@ -510,7 +508,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* view dashboard icon   <span className="mdi-light--view-dashboard"></span> */
+// view dashboard icon   <span className="mdi-light--view-dashboard"></span>
 
 .mdi-light--view-dashboard {
   display: inline-block;
@@ -526,7 +524,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* users icon     <span className="ph--users-light"></span> */
+// users icon     <span className="ph--users-light"></span>
 .ph--users-light {
   display: inline-block;
   width: 1em;
@@ -541,7 +539,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* bag icon   <span className="solar--bag-3-linear"></span> */
+// bag icon   <span className="solar--bag-3-linear"></span>
 .solar--bag-3-linear {
   display: inline-block;
   width: 1em;
@@ -556,7 +554,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* box icon  <span className="fluent--box-20-regular"></span> */
+// box icon  <span className="fluent--box-20-regular"></span>
 .fluent--box-20-regular {
   display: inline-block;
   width: 1em;
@@ -571,7 +569,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* multiple pages icon   <span className="iconoir--multiple-pages-empty"></span> */
+// multiple pages icon   <span className="iconoir--multiple-pages-empty"></span>
 .iconoir--multiple-pages-empty {
   display: inline-block;
   width: 1em;
@@ -586,7 +584,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* system icon   <span className="fluent-mdl2--file-system"></span> */
+// system icon   <span className="fluent-mdl2--file-system"></span>
 .fluent-mdl2--file-system {
   display: inline-block;
   width: 1em;
@@ -601,7 +599,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* shipping icon   <span className="la--shipping-fast"></span> */
+// shipping icon   <span className="la--shipping-fast"></span>
 .la--shipping-fast {
   display: inline-block;
   width: 1em;
@@ -616,7 +614,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* report icon   <span className="cil--report-slash"></span> */
+// report icon   <span className="cil--report-slash"></span>
 .cil--report-slash {
   display: inline-block;
   width: 1em;
@@ -631,7 +629,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* settings icon   <span className="solar--settings-broken"></span> */
+// settings icon   <span className="solar--settings-broken"></span>
 .solar--settings-broken {
   display: inline-block;
   width: 1em;
@@ -646,7 +644,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* logout icon   <span className="solar--logout-2-broken"></span> */
+// logout icon   <span className="solar--logout-2-broken"></span>
 .solar--logout-2-broken {
   display: inline-block;
   width: 1em;
@@ -661,7 +659,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* messages icon    <span className="ant-design--message-outlined"></span> */
+// messages icon    <span className="ant-design--message-outlined"></span>
 .ant-design--message-outlined {
   display: inline-block;
   width: 1em;
@@ -676,7 +674,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* bell notification icon   <span className="ph--bell"></span> */
+// bell notification icon   <span className="ph--bell"></span>
 .ph--bell {
   display: inline-block;
   width: 1em;
@@ -691,7 +689,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* formkit arrow down icon   <span className="formkit--arrowdown"></span> */
+// formkit arrow down icon   <span className="formkit--arrowdown"></span>
 .formkit--arrowdown {
   display: inline-block;
   width: 0.57em;
@@ -706,7 +704,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* formkit arrow up icon    <span className="formkit--arrowup"></span> */
+// formkit arrow up icon    <span className="formkit--arrowup"></span>
 .formkit--arrowup {
   display: inline-block;
   width: 0.57em;
@@ -721,7 +719,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* face smile icon   <span className="circum--face-smile"></span> */
+// face smile icon   <span className="circum--face-smile"></span>
 .circum--face-smile {
   display: inline-block;
   width: 1em;
@@ -736,7 +734,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* invoice icon   <span className="iconamoon--invoice-thin"></span> */
+// invoice icon   <span className="iconamoon--invoice-thin"></span>
 .iconamoon--invoice-thin {
   display: inline-block;
   width: 1em;
@@ -751,7 +749,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* dots three icon   <span className="ph--dots-three-outline-thin"></span> */
+// dots three icon   <span className="ph--dots-three-outline-thin"></span>
 .ph--dots-three-outline-thin {
   display: inline-block;
   width: 1em;
@@ -766,7 +764,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* prime user icon   <span className="prime--user"></span> */
+// prime user icon   <span className="prime--user"></span>
 .prime--user {
   display: inline-block;
   width: 1em;
@@ -781,7 +779,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* filter icon   <span className="bi--filter"></span> */
+// filter icon   <span className="bi--filter"></span>
 .bi--filter {
   display: inline-block;
   width: 1em;
@@ -796,7 +794,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* eyes icon   <span className="fluent--eye-48-regular"></span> */
+// eyes icon   <span className="fluent--eye-48-regular"></span>
 .fluent--eye-48-regular {
   display: inline-block;
   width: 1em;
@@ -825,7 +823,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* users icon   <span className="ph--users-light"></span> */
+// users icon   <span className="ph--users-light"></span>
 .ph--users-light {
   display: inline-block;
   width: 1em;
@@ -840,7 +838,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* members  <span className="ph--user-light"></span> */
+// members  <span className="ph--user-light"></span>
 .ph--user-light {
   display: inline-block;
   width: 1em;
@@ -855,7 +853,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* user plus icon   <span className="ph--user-plus-light"></span> */
+// user plus icon   <span className="ph--user-plus-light"></span>
 .ph--user-plus-light {
   display: inline-block;
   width: 1em;
@@ -870,7 +868,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* export icon   <span className="ant-design--export-outlined"></span> */
+// export icon   <span className="ant-design--export-outlined"></span>
 .ant-design--export-outlined {
   display: inline-block;
   width: 1em;
@@ -885,7 +883,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* plus icon   <span className="ic--round-plus"></span> */
+// plus icon   <span className="ic--round-plus"></span>
 .ic--round-plus {
   display: inline-block;
   width: 1em;
@@ -900,7 +898,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* edit icon   <span className="fluent--edit-48-filled"></span> */
+// edit icon   <span className="fluent--edit-48-filled"></span>
 .fluent--edit-48-filled {
   display: inline-block;
   width: 1em;
@@ -915,7 +913,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* delete icon   <span className="fluent--delete-48-filled"></span> */
+// delete icon   <span className="fluent--delete-48-filled"></span>
 .fluent--delete-48-filled {
   display: inline-block;
   width: 1em;
@@ -930,7 +928,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* order icon   <span className="solar--bill-list-linear"></span> */
+// order icon   <span className="solar--bill-list-linear"></span>
 .solar--bill-list-linear {
   display: inline-block;
   width: 1em;
@@ -945,7 +943,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* delivered order icon    <span className="solar--bill-check-linear"></span> */
+// delivered order icon    <span className="solar--bill-check-linear"></span>
 .solar--bill-check-linear {
   display: inline-block;
   width: 1em;
@@ -960,7 +958,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* cancelled order icon    <span className="solar--bill-cross-linear"></span> */
+// cancelled order icon    <span className="solar--bill-cross-linear"></span>
 .solar--bill-cross-linear {
   display: inline-block;
   width: 1em;
@@ -975,7 +973,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* product icon   <span className="mage--box-3d"></span> */
+// product icon   <span className="mage--box-3d"></span>
 .mage--box-3d {
   display: inline-block;
   width: 1.1em;
@@ -990,7 +988,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* product out of stock icon    <span className="mage--box-3d-cross"></span> */
+// product out of stock icon    <span className="mage--box-3d-cross"></span>
 .mage--box-3d-cross {
   display: inline-block;
   width: 1.1em;
@@ -1005,7 +1003,7 @@ body {
   mask-size: 100% 100%;
 }
 
-/* product inventory icon    <span className="mage--box-3d-check"></span> */
+// product inventory icon    <span className="mage--box-3d-check"></span>
 .mage--box-3d-check {
   display: inline-block;
   width: 1.1em;

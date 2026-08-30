@@ -1,0 +1,64 @@
+<div
+  class="absolute w-full h-full grid grid-cols-[1.5fr_1fr] max-[1024px]:flex max-[1024px]:flex-col gap-14 landing-page"
+>
+  <div
+    class="w-full h-full flex flex-col justify-center pt-4 pl-12 max-[1400px]:pl-10 max-[1024px]:!absolute max-[1024px]:top-[70%] max-[1024px]:w-[75%] max-[1024px]:!-translate-y-1/2 max-[1024px]:justify-start max-[768px]:w-[85%] max-[480px]:w-[95%]"
+  >
+    <div
+      #headingEl
+      class="heading font-medium leading-[2.5rem] uppercase font-[var(--font-roboto)]"
+    >
+      <span class="text-[2.5rem] max-[480px]:text-[2.3rem]">{{ content().title }}</span>
+      <span class="text-[2.5rem] font-[var(--font-the-nautigal)]">{{ content().character }}</span>
+      <br />
+      <span class="text-[2.5rem]">{{ content().title1 }}</span>
+      <div
+        class="text-[0.6rem] font-light max-md:font-normal normal-case max-w-[85%] leading-4 font-[var(--font-open-sans)] my-[0.6rem] mb-6"
+      >
+        {{ content().description }}
+      </div>
+    </div>
+    <a
+      href="/store"
+      class="no-underline w-20 h-[1.8rem] text-[0.45rem] bg-[var(--primary-color)] text-[var(--text-color)] uppercase font-[var(--font-open-sans)] font-light max-md:font-normal flex justify-center items-center rounded-2xl transition duration-500 cursor-pointer hover:bg-[var(--hover-color)]"
+    >
+      Shop Now
+    </a>
+  </div>
+
+  <div class="flex items-center relative animation-items">
+    <div class="big-circle"></div>
+
+    <div class="animate-wrapper">
+      <div class="circle-contain w-full h-full flex justify-center items-center">
+        <div class="circle-bg"></div>
+        <div class="circle-line">
+          <div class="mini-circle-1"></div>
+          <div class="mini-circle-2"></div>
+          <button class="playbtn">
+            <span class="basil--play-solid icon"></span>
+          </button>
+        </div>
+
+        <img #imgEl [src]="currentImage()" alt="Current Item" class="item-img max-w-none" />
+      </div>
+    </div>
+
+    <div class="number-sliding">
+      @for (number of sortedNumbers(); track $index; let i = $index) {
+        <div #numberEl class="number" [class.active]="i === 2">
+          <p>0{{ number }}</p>
+        </div>
+      }
+    </div>
+
+    <div class="navigate-btn">
+      <div class="left-arrow" (click)="handleLeftClick()">
+        <span class="tabler--chevron-left icon"></span>
+      </div>
+      <div class="right-arrow" (click)="handleRightClick()">
+        <span class="tabler--chevron-right icon"></span>
+      </div>
+    </div>
+  </div>
+</div>

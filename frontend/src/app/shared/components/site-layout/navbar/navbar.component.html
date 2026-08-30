@@ -1,0 +1,8 @@
+<div
+  class="fixed -top-px w-full h-14 md:h-14 px-6 flex justify-between z-[9999] transition-all duration-300"
+  [style.backgroundColor]="isHomePage() ? 'transparent' : 'rgba(0, 0, 0, 0.8)'"
+  [style.backdropFilter]="isHomePage() ? 'blur(0px)' : 'blur(30px)'"
+>
+  <app-nav-links />
+  <app-nav-tools />
+</div>

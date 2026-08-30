@@ -1,0 +1,25 @@
+<div class="quantity">
+  @if (showTitle()) {
+    <p class="text-base font-sans font-medium text-[var(--text-color)]">Quantity:</p>
+  }
+
+  <div
+    class="mt-[0.4rem] text-[0.6rem] font-sans font-medium text-[var(--text-color)] flex justify-between items-center"
+  >
+    <span
+      class="flex justify-center items-center cursor-pointer text-[0.7rem] text-[#8a8a8a]"
+      (click)="handleMinusClick()"
+    >
+      <span class="tabler--minus"></span>
+    </span>
+
+    <span class="number">{{ quantity() }}</span>
+
+    <span
+      class="flex justify-center items-center cursor-pointer text-[0.7rem] text-[#8a8a8a]"
+      (click)="handlePlusClick()"
+    >
+      <span class="tabler--plus"></span>
+    </span>
+  </div>
+</div>
