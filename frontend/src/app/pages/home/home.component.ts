@@ -20,7 +20,7 @@ interface ContentItem {
 }
 
 interface NumberStep {
-  fromY: number | null; // px, không còn theo %
+  fromY: number | null;
   toY: number;
   fade?: boolean;
 }
@@ -177,8 +177,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  /** Ảnh: kill tween nổi -> chạy tween bay vào -> xong thì mới bật lại tween nổi.
-   *  Chỉ 1 tween điều khiển `y` của phần tử tại 1 thời điểm -> không còn tranh chấp. */
   private animateImageTransition(dir: 'up' | 'down', first = false): void {
     if (!this.imgEl) return;
     const el = this.imgEl.nativeElement;
