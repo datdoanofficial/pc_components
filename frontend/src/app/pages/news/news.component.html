@@ -1,0 +1,58 @@
+<div class="news-body relative w-full h-fit pt-[4.2rem] px-[3.5rem] pb-12">
+  <h1 class="font-[var(--font-open-sans)] font-normal text-[1.5rem] mb-6 text-white">News</h1>
+
+  <!-- Hot Topic -->
+  <div
+    class="hot-topic relative grid grid-cols-2 gap-6 mt-4 w-full pb-6 border-b-[0.03rem] border-[#2a2a2a]"
+  >
+    <div class="glow-line"></div>
+    @for (topic of hotTopics; track $index) {
+      <div class="topic">
+        <div
+          appTilt
+          class="card w-full aspect-[2/1.1] rounded-2xl bg-[#2a2a2a] outline outline-[0.06rem] outline-[#4a4a4a]"
+        ></div>
+        <div class="content-wrapper mt-4">
+          <div class="text-[0.4rem] text-[#8a8a8a]">{{ topic.date }}</div>
+          <div class="text-[0.6rem] font-medium text-white mt-3">{{ topic.title }}</div>
+          <p class="text-[0.5rem] text-[#8a8a8a] leading-[0.8rem] mt-[0.7rem]">
+            {{ topic.content }}
+          </p>
+          <a
+            routerLink="/news/newsdetails"
+            class="readmore-btn custom-underline relative inline-block text-[0.5rem] font-light text-white mt-[0.7rem]"
+          >
+            Read more
+          </a>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- News List -->
+  <div class="news-list relative w-full h-fit mb-3">
+    @for (news of newsList; track $index) {
+      <div
+        class="news relative w-full h-fit py-4 flex items-center border-b-[0.03rem] border-[#2a2a2a]"
+      >
+        <div class="glow-line"></div>
+        <div class="news-content flex items-center w-full h-full">
+          <div
+            appTilt
+            class="card h-20 aspect-[3/1.8] mr-6 rounded-lg bg-[#2a2a2a] outline outline-[0.06rem] outline-[#4a4a4a]"
+          ></div>
+          <div class="content-wrapper">
+            <p class="text-[0.35rem] text-[#8a8a8a]">{{ news.date }}</p>
+            <p class="text-[0.6rem] font-medium text-white mt-2">{{ news.title }}</p>
+            <p class="text-[0.45rem] text-[#8a8a8a] leading-[0.8rem] mt-2">{{ news.content }}</p>
+            <a
+              routerLink="/news/newsdetails"
+              class="readmore-btn custom-underline w-fit block text-[0.45rem] text-white mt-2 underline"
+              >Read more</a
+            >
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

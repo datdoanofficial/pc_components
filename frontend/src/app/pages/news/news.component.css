@@ -1,0 +1,55 @@
+.hot-topic {
+  --border-width: 1px;
+}
+
+.news-list .news {
+  --border-width: 1px;
+}
+
+/* Tùy chỉnh độ mỏng, vị trí và animation đường gạch chân */
+.custom-underline {
+  position: relative;
+  text-decoration: none;
+}
+
+.custom-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0.5px;
+  width: 100%;
+  height: 0.5px;
+  background-color: currentColor;
+  opacity: 0.8;
+
+  /* Mặc định khi mouse out: Điểm neo ở bên trái, mọc từ trái sang phải */
+  transform-origin: left center;
+  transform: scaleX(1);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.custom-underline:hover::after {
+  /* Khi hover: Chuyển điểm neo sang bên phải, co rút dần về bên phải */
+  transform-origin: right center;
+  transform: scaleX(0);
+}
+
+/* Thanh vệt sáng chạy theo chuột */
+.glow-line {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  --x: -1000px;
+  --y: -1000px;
+  background: radial-gradient(
+    120px circle at var(--x) var(--y),
+    #eb8971 100%,
+    transparent 100%
+  ) !important;
+  mask: linear-gradient(#2a2a2a, #2a2a2a) 100% 100% / 100% var(--border-width) no-repeat;
+  -webkit-mask: linear-gradient(#2a2a2a, #2a2a2a) 100% 100% / 100% var(--border-width) no-repeat;
+  pointer-events: none;
+  z-index: 10;
+}
