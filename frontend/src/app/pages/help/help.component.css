@@ -1,0 +1,28 @@
+/* Custom Glow Line trên/dưới cho List Question */
+.glow-line-top,
+.glow-line-bottom {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  --x: -1000px;
+  --y: -1000px;
+  background: radial-gradient(
+    120px circle at var(--x) var(--y),
+    #eb8971 100%,
+    transparent 100%
+  ) !important;
+  pointer-events: none;
+}
+
+.glow-line-top {
+  top: 0;
+  mask: linear-gradient(#2a2a2a, #2a2a2a) 100% 0% / 100% 1px no-repeat;
+  -webkit-mask: linear-gradient(#2a2a2a, #2a2a2a) 100% 0% / 100% 1px no-repeat;
+}
+
+.glow-line-bottom {
+  bottom: 0;
+  mask: linear-gradient(#2a2a2a, #2a2a2a) 100% 100% / 100% 1px no-repeat;
+  -webkit-mask: linear-gradient(#2a2a2a, #2a2a2a) 100% 100% / 100% 1px no-repeat;
+}
