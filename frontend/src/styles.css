@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @import url('https://fonts.googleapis.com/css2?family=Pontano+Sans:wght@300..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&display=swap');
@@ -27,9 +27,6 @@
   --font-the-nautigal: 'The Nautigal', cursive;
 }
 
-html {
-  font-size: calc(0.75rem + 1.5vw);
-}
 html::-webkit-scrollbar {
   width: 8px;
 }
@@ -45,6 +42,9 @@ html::-webkit-scrollbar-thumb {
 html {
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  font-size: calc(0.75rem + 1.5vw);
+  overscroll-behavior-y: none;
+  -ms-overflow-style: none; /* Edge/IE cũ */
 }
 
 body {

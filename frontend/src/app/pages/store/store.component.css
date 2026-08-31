@@ -1,0 +1,9 @@
+@media screen and (max-width: 640px) {
+  .filter-panel::-webkit-scrollbar {
+    width: 5px;
+  }
+  .filter-panel::-webkit-scrollbar-thumb {
+    background: #2a2a2a;
+    border-radius: 5px;
+  }
+}

@@ -1,2 +1,5 @@
 <app-navbar />
 <router-outlet />
+@if (!isHomePage()) {
+  <app-footer />
+}

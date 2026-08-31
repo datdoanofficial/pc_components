@@ -182,7 +182,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const el = this.imgEl.nativeElement;
 
     this.floatTween?.kill();
-    gsap.set(el, { clearProps: 'y' });
+    gsap.set(el, { clearProps: 'all' });
 
     const fromY = first ? 40 : dir === 'up' ? 34 : -34;
     gsap.fromTo(
@@ -201,6 +201,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private startFloatingImage(): void {
     if (!this.imgEl) return;
+
+    gsap.set(this.imgEl.nativeElement, {
+      willChange: 'transform',
+      force3D: true,
+    });
+
     this.floatTween = gsap.to(this.imgEl.nativeElement, {
       y: -10,
       duration: 1.4,
@@ -229,8 +235,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
             opacity: 1,
             scale: 1,
             yPercent: 0,
-            duration: 1, // Đồng bộ 1s với heading & image
-            ease: 'power3.out', // Dải chuyển động mượt & lướt nhẹ hơn
+            duration: 1,
+            ease: 'power3.out',
             overwrite: 'auto',
             onComplete: () => {
               gsap.set(p, { yPercent: 0, scale: 1, opacity: 1 });
@@ -240,14 +246,18 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       } else {
         gsap.fromTo(
           p,
-          { yPercent: step.fromY as number },
+          {
+            yPercent: step.fromY as number,
+            opacity: 1,
+          },
           {
             yPercent: 0,
-            duration: 0.8, // Đồng bộ 1s với heading & image
-            ease: 'power3.out', // Dải chuyển động mượt & lướt nhẹ hơn
+            opacity: 1,
+            duration: 0.5,
+            ease: 'power3.out',
             overwrite: 'auto',
             onComplete: () => {
-              gsap.set(p, { yPercent: 0, y: 0 });
+              gsap.set(p, { yPercent: 0, y: 0, opacity: 1 });
             },
           },
         );
