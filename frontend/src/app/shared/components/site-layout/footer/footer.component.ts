@@ -2,11 +2,13 @@ import {
   Component,
   ElementRef,
   OnDestroy,
+  PLATFORM_ID,
   ViewChild,
   afterNextRender,
   inject,
   signal,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { RouterLink, Router, NavigationEnd } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
 
@@ -20,12 +22,16 @@ export class FooterComponent implements OnDestroy {
   @ViewChild('footerRef') footerRef!: ElementRef<HTMLDivElement>;
 
   private router = inject(Router);
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
   private routerSub: Subscription | null = null;
   private scrollHandler = () => this.handleScroll();
 
   headerFooterHeight = signal('0rem');
 
   constructor() {
+    if (!this.isBrowser) return;
+
     // Toàn bộ thao tác đụng tới window/scroll chỉ chạy ở browser,
     // tránh lỗi/không gắn được listener khi component render qua SSR.
     afterNextRender(() => {
@@ -41,16 +47,19 @@ export class FooterComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.routerSub?.unsubscribe();
+
+    if (!this.isBrowser || typeof window === 'undefined') return;
+
     window.removeEventListener('scroll', this.scrollHandler);
     window.removeEventListener('resize', this.scrollHandler);
   }
 
   private handleScroll(): void {
+    if (!this.isBrowser || typeof window === 'undefined') return;
+
     const footerEl = this.footerRef?.nativeElement;
     if (!footerEl) return;
 
-    // getBoundingClientRect() luôn chính xác theo viewport, không phụ thuộc
-    // offsetParent — an toàn với mọi kiểu position (absolute/relative/static).
     const rect = footerEl.getBoundingClientRect();
     const footerOffsetTop = rect.top + window.scrollY;
     const scrollPosition = window.scrollY;

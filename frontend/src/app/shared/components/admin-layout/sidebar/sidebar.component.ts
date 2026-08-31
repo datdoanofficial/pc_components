@@ -15,7 +15,7 @@ interface NavItem {
   templateUrl: './sidebar.component.html',
 })
 export class SidebarComponent {
-  logoUrl = 'assets/images/logo.webp';
+  logoUrl = '/images/logo.webp';
 
   navItems: NavItem[] = [
     {
