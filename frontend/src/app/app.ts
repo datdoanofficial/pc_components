@@ -22,4 +22,13 @@ export class App {
     ),
     { initialValue: this.router.url === '/' },
   );
+
+  isLoginPage = toSignal(
+    this.router.events.pipe(
+      filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+      map((e) => e.urlAfterRedirects === '/login'),
+      startWith(this.router.url === '/login'),
+    ),
+    { initialValue: this.router.url === '/login' },
+  );
 }

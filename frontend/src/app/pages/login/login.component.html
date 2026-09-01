@@ -1,0 +1,527 @@
+<div
+  class="login-page bg-black h-screen w-full flex justify-center items-center overflow-hidden"
+  [class.invisible]="!ready()"
+>
+  <div
+    class="main-layout relative w-[940px] max-[1024px]:w-[34rem] max-[1024px]:h-[24rem] h-[80vh] max-[640px]:!w-full max-[640px]:!h-full flex items-center overflow-hidden"
+  >
+    <!-- login form -->
+    <div
+      class="login-form w-full h-[75%] max-[640px]:!h-full flex max-[640px]:flex-col bg-[#161616] rounded-[20px] max-[1024px]:rounded-[0.6rem] max-[640px]:!rounded-none"
+    >
+      <!-- scroll bar (sidebar) -->
+      <div
+        class="scroll-bar w-[12%] max-[640px]:w-full h-full max-[640px]:h-fit py-10 max-[1024px]:py-6 max-[640px]:py-0 max-[640px]:pl-7 max-[640px]:pr-1 flex flex-col max-[640px]:flex-row items-center max-[640px]:justify-center"
+      >
+        <div class="brand-logo w-[35%] max-[640px]:w-[12%] max-[640px]:mr-3">
+          <img src="/images/login-page/logo.webp" alt="Logo" class="w-full" />
+        </div>
+
+        <ul class="mt-[50px] max-[1024px]:mt-8 max-[640px]:mt-0 max-[640px]:flex w-full h-fit">
+          <!-- sign in bar -->
+          <li
+            class="relative w-full max-[640px]:h-full aspect-square max-[640px]:aspect-auto flex flex-col justify-center items-center mb-[10px] max-[1024px]:mb-[0.4rem] list-none"
+          >
+            <a
+              href="javascript:void(0)"
+              class="mt-[-5px] max-[640px]:mt-[-0.2rem] text-center no-underline font-[var(--font-open-sans)] font-light text-[16px] max-[1024px]:text-base max-[640px]:text-[0.8rem]"
+              [class.transition]="ready()"
+              [class.duration-500]="ready()"
+              [class.text-white]="isSignIn() || showForgotPasswordForm()"
+              [class.text-[#8a8a8a]]="!(isSignIn() || showForgotPasswordForm())"
+              (click)="switchToSignIn()"
+            >
+              <div class="icon text-[30px] max-[1024px]:text-base max-[640px]:text-[1.2rem]">
+                <span class="solar--login-3-bold-duotone"></span>
+              </div>
+              <p>Sign In</p>
+            </a>
+            <div
+              #signInLine
+              class="line absolute translate-y-0 left-0 max-[640px]:left-[10%] w-1 max-[1024px]:w-[0.15rem] max-[640px]:w-4/5 h-4/5 max-[640px]:h-[0.15rem] rounded-full bg-[var(--primary-light)]"
+              [class.hidden]="!(isSignIn() || showForgotPasswordForm())"
+            ></div>
+          </li>
+
+          <!-- sign up bar -->
+          <li
+            class="relative w-full max-[640px]:h-full aspect-square max-[640px]:aspect-auto flex flex-col justify-center items-center mb-[10px] max-[1024px]:mb-[0.4rem] list-none"
+          >
+            <a
+              class="mt-[-5px] max-[640px]:mt-[-0.2rem] text-center no-underline font-[var(--font-open-sans)] font-light text-[16px] max-[1024px]:text-base max-[640px]:text-[0.8rem]"
+              [class.transition]="ready()"
+              [class.duration-500]="ready()"
+              [class.text-white]="!isSignIn() && !showForgotPasswordForm()"
+              [class.text-[#8a8a8a]]="!(!isSignIn() && !showForgotPasswordForm())"
+              (click)="switchToSignUp()"
+            >
+              <div class="icon text-[30px] max-[1024px]:text-base max-[640px]:text-[1.2rem]">
+                <span class="solar--user-plus-bold-duotone"></span>
+              </div>
+              <p>Sign Up</p>
+            </a>
+            <div
+              #signUpLine
+              class="line absolute translate-y-0 left-0 max-[640px]:left-[10%] w-1 max-[1024px]:w-[0.15rem] max-[640px]:w-4/5 h-4/5 max-[640px]:h-[0.15rem] rounded-full bg-[var(--primary-light)]"
+              [class.hidden]="isSignIn() || showForgotPasswordForm()"
+            ></div>
+          </li>
+
+          <!-- home -->
+          <li
+            class="relative w-full max-[640px]:h-full aspect-square max-[640px]:aspect-auto flex flex-col justify-center items-center mb-[10px] list-none"
+          >
+            <a
+              routerLink="/"
+              class="mt-[-5px] max-[640px]:mt-[-0.2rem] text-center no-underline font-[var(--font-open-sans)] font-light text-[16px] max-[1024px]:text-base max-[640px]:text-[0.8rem] text-[#8a8a8a] hover:text-white"
+              [class.transition]="ready()"
+              [class.duration-500]="ready()"
+            >
+              <div class="icon text-[30px] max-[1024px]:text-base max-[640px]:text-[1.2rem]">
+                <span class="solar--home-smile-bold-duotone"></span>
+              </div>
+              <p>Home</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ============ SIGN IN ============ -->
+      @if (step() === 'sign-in') {
+        <section class="sign-in relative flex-1 h-full">
+          <form
+            class="sign-in-form absolute right-0 top-1/2 -translate-y-1/2 max-[640px]:!top-0 max-[640px]:!translate-y-0 w-[50%] max-[640px]:!w-full h-[85%] max-[640px]:!h-[78%] flex items-center justify-center flex-col rounded-tr-[30px] rounded-br-[30px] max-[640px]:!rounded-none"
+            (submit)="handleSubmit($event)"
+          >
+            <div
+              class="form-contain absolute w-full h-fit px-4 max-[640px]:!px-6 py-5 slide-in-x"
+              [class.slide-in-x]="ready()"
+            >
+              <div class="input-fields relative w-full h-fit mb-[5px]">
+                <input
+                  type="email"
+                  placeholder="Email Address"
+                  required
+                  class="login-input"
+                  (input)="handleSignInInputChange('email', $any($event.target).value)"
+                />
+                <div class="input-box relative">
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    required
+                    class="login-input"
+                    (input)="handleSignInInputChange('password', $any($event.target).value)"
+                  />
+                </div>
+              </div>
+
+              <div class="line-text relative w-full h-fit mb-[25px] max-[640px]:!mb-[1.4rem]">
+                <p
+                  class="flex items-center font-[var(--font-open-sans)] font-light text-[#8a8a8a] text-[14px] max-[640px]:!text-[0.8rem] before:content-[''] before:flex-1 before:border-b before:border-[#5a5a5a] before:mt-[2px] before:mr-5 after:content-[''] after:flex-1 after:border-b after:border-[#5a5a5a] after:mt-[2px] after:ml-5"
+                >
+                  or continue with
+                </p>
+              </div>
+
+              <div class="signin-options flex justify-between gap-[10px] max-[640px]:!gap-2">
+                <a href="/"
+                  ><img src="/images/login-page/fb-icon.webp" alt="Facebook" class="social-icon"
+                /></a>
+                <a href="/"
+                  ><img src="/images/login-page/gg-icon.webp" alt="Google" class="social-icon"
+                /></a>
+                <a href="/"
+                  ><img src="/images/login-page/wechat-icon.webp" alt="WeChat" class="social-icon"
+                /></a>
+                <a href="/"
+                  ><img src="/images/login-page/twitch-icon.webp" alt="Twitch" class="social-icon"
+                /></a>
+              </div>
+
+              <div
+                class="rmbMe-forgotPwd relative flex items-center justify-between w-full h-fit mb-[30px] max-[640px]:!mb-[1.6rem] mt-[25px] max-[640px]:!mt-[1.2rem]"
+              >
+                <label
+                  class="rmbMe relative cursor-pointer text-[14px] max-[640px]:!text-[0.75rem] flex items-center select-none text-white font-[var(--font-open-sans)] font-light"
+                >
+                  <input type="checkbox" class="checkbox-input" />
+                  <span class="checkmark"></span>
+                  Remember Me
+                </label>
+                <a
+                  href="/"
+                  class="forgot-link absolute right-0 font-[var(--font-open-sans)] font-light text-[14px] max-[640px]:!text-[0.75rem] text-white underline decoration-[0.7px] underline-offset-[3px] hover:no-underline"
+                  (click)="showForgotPasswordForm.set(true); $event.preventDefault()"
+                >
+                  Forgot Password?
+                </a>
+              </div>
+
+              <input
+                type="submit"
+                value="sign in"
+                class="login-submit-btn"
+                [disabled]="!isSignInFormValid()"
+              />
+
+              <div class="link-wrapper">
+                <a href="/" class="privacy">Privacy Policy</a>
+                <span class="link-note">
+                  Don&rsquo;t you have an account yet?&nbsp;
+                  <a
+                    href="/"
+                    class="link-note-a"
+                    (click)="switchToSignUp(); $event.preventDefault()"
+                    >Sign Up</a
+                  >
+                </span>
+              </div>
+            </div>
+          </form>
+
+          <div
+            class="banner text-banner"
+            [class.sign-in-active]="false"
+            [class.sign-up-active]="true"
+          >
+            <div #bannerText class="banner-content">
+              <div class="text">
+                <h2>{{ isSignIn() ? 'Start Your Journey.' : 'Create New Account.' }}</h2>
+                <p>
+                  {{
+                    showRegistrationForm()
+                      ? 'Fill in your personal details'
+                      : 'Choose your sign up method'
+                  }}
+                </p>
+              </div>
+              @if (showRegistrationForm()) {
+                <button
+                  #backToMethodBtn
+                  type="button"
+                  class="back-to-method-regis"
+                  (click)="handleBackToMethodRegisClick()"
+                >
+                  <span class="ph--arrow-left-thin icon"></span>
+                </button>
+              }
+            </div>
+          </div>
+        </section>
+      }
+
+      <!-- ============ FORGOT PASSWORD ============ -->
+      @if (step() === 'forgot-password') {
+        <section class="forgot-password relative flex-1 h-full">
+          <form
+            class="forgot-password-form absolute right-0 w-[50%] max-[640px]:!w-full h-[85%] max-[640px]:!h-[78%] flex items-center justify-center flex-col rounded-tr-[30px] rounded-br-[30px] max-[640px]:!rounded-none"
+            (submit)="handleContinueClick($event)"
+          >
+            <div class="form-contain absolute w-full h-fit px-4 max-[640px]:!px-6 py-5 slide-in-x">
+              <div class="input-fields relative w-full h-fit mb-[5px]">
+                <input
+                  type="email"
+                  placeholder="Email Address"
+                  required
+                  class="login-input"
+                  (input)="handleResetEmailChange($any($event.target).value)"
+                />
+              </div>
+
+              <input
+                type="submit"
+                value="Continue"
+                class="login-submit-btn"
+                [disabled]="!isResetEmailValid()"
+              />
+
+              <div class="link-wrapper">
+                <a href="/" class="privacy">Privacy Policy</a>
+                <span class="link-note">
+                  Remembered your password?&nbsp;
+                  <a
+                    href="/"
+                    class="link-note-a"
+                    (click)="toggleForm(true); $event.preventDefault()"
+                    >Sign In</a
+                  >
+                </span>
+              </div>
+            </div>
+          </form>
+
+          <div class="banner text-banner forgot-password-active">
+            <div #bannerText class="banner-content">
+              <div class="text">
+                <h2>Forgot Password?</h2>
+                <p class="leading-[30px] max-[640px]:!leading-[1.8rem]">
+                  Enter your email and we'll send you<br />
+                  a reset code
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      }
+
+      <!-- ============ ENTER CODE ============ -->
+      @if (step() === 'enter-code') {
+        <section class="enter-code relative flex-1 h-full">
+          <form
+            class="enter-code-form absolute right-0 w-[50%] max-[640px]:!w-full h-[85%] max-[640px]:!h-[76%] flex items-center justify-center flex-col rounded-tr-[30px] rounded-br-[30px] max-[640px]:!rounded-none"
+          >
+            <div class="form-contain absolute w-full h-fit px-4 max-[640px]:!px-6 py-5 slide-in-x">
+              <div
+                class="title text-center font-[var(--font-open-sans)] font-medium mb-5 max-[640px]:!mb-[0.7rem] text-xl max-[640px]:!text-[1.1rem]"
+              >
+                Check Your Inbox
+              </div>
+              <p
+                class="text-center font-[var(--font-open-sans)] font-light text-sm max-[640px]:!text-[0.8rem] leading-[22px] max-[640px]:!leading-[1.4rem] text-[#8a8a8a] mb-[30px] max-[640px]:!mb-[1.4rem]"
+              >
+                Enter the 6-digit security code we sent to
+                <span class="text-white">{{ maskEmail(email()) }}</span>
+              </p>
+
+              <div #codeInputsWrapper class="code-inputs flex justify-between">
+                @for (digit of code(); track $index) {
+                  <input
+                    type="text"
+                    maxlength="1"
+                    required
+                    [attr.data-code-index]="$index"
+                    [value]="digit"
+                    class="code-input"
+                    (input)="handleCodeChange($any($event.target).value, $index)"
+                    (keydown)="handleKeyDown($event, $index)"
+                    (focus)="onFocusSelect($event)"
+                  />
+                }
+              </div>
+
+              <input
+                type="submit"
+                value="Verify Code"
+                class="login-submit-btn mt-[30px] max-[640px]:!mt-[1.4rem]"
+                [disabled]="!isResetCodeValid()"
+              />
+
+              <div class="link-wrapper mt-[30px] max-[640px]:!mt-[1.4rem]">
+                <a href="/" class="privacy">Privacy Policy</a>
+                <span class="link-note text-center leading-5 max-[640px]:!leading-[1.4rem]">
+                  No email? Check the spam folder.<br />
+                  <a
+                    href="/"
+                    class="link-note-a"
+                    (click)="toggleForm(true); $event.preventDefault()"
+                    >Resend code</a
+                  >
+                  or
+                  <a
+                    href="/"
+                    class="link-note-a"
+                    (click)="
+                      showEnterCodeForm.set(false);
+                      showForgotPasswordForm.set(true);
+                      $event.preventDefault()
+                    "
+                    >enter different email address</a
+                  >
+                </span>
+              </div>
+            </div>
+          </form>
+
+          <div class="banner text-banner enter-code-active">
+            <div class="text">
+              <h2>Enter Security Code</h2>
+              <p>Enter the 6-digit code sent to your email</p>
+            </div>
+          </div>
+        </section>
+      }
+
+      <!-- ============ SIGN UP ============ -->
+      @if (step() === 'sign-up') {
+        <section class="sign-up relative flex-1 h-full">
+          @if (!showRegistrationForm()) {
+            <div
+              class="regis-options absolute right-0 top-1/2 -translate-y-1/2 max-[640px]:!top-20 max-[640px]:!translate-y-0 w-[50%] max-[640px]:!w-full h-[85%] max-[640px]:!h-[78%] flex items-center justify-center flex-col rounded-tr-[30px] rounded-br-[30px] max-[640px]:!rounded-none"
+            >
+              <div
+                class="method-contain absolute w-full h-full px-[30px] max-[640px]:!px-6 py-[30px] max-[640px]:!py-20 slide-in-x"
+              >
+                <div class="email-regis regis-link" (click)="handleEmailSignUpClick($event)">
+                  <img
+                    src="/images/login-page/nextin-option.webp"
+                    alt="Next In"
+                    class="regis-icon-img"
+                  />
+                  <p>Sign up with Next In</p>
+                </div>
+                <a href="/" class="regis-link">
+                  <img
+                    src="/images/login-page/fb-option.webp"
+                    alt="Facebook"
+                    class="regis-icon-img"
+                  />
+                  <p>Sign up with Facebook</p>
+                </a>
+                <a href="/" class="regis-link">
+                  <img
+                    src="/images/login-page/gg-option.webp"
+                    alt="Google"
+                    class="regis-icon-img"
+                  />
+                  <p>Sign up with Google</p>
+                </a>
+                <a href="/" class="regis-link">
+                  <img
+                    src="/images/login-page/wechat-option.webp"
+                    alt="WeChat"
+                    class="regis-icon-img"
+                  />
+                  <p>Sign up with WeChat</p>
+                </a>
+                <a href="/" class="regis-link">
+                  <img
+                    src="/images/login-page/twitch-option.webp"
+                    alt="Twitch"
+                    class="regis-icon-img"
+                  />
+                  <p>Sign up with Twitch</p>
+                </a>
+                <span
+                  class="sign-in-link flex justify-center mt-[45px] max-[640px]:!mt-8 text-[14px] max-[640px]:!text-[0.75rem] text-[#8a8a8a] font-[var(--font-open-sans)] font-light"
+                >
+                  Already have a Next In account?&nbsp;
+                  <a
+                    href="/"
+                    class="link-note-a"
+                    (click)="switchToSignIn(); $event.preventDefault()"
+                    >Sign In
+                  </a>
+                </span>
+              </div>
+            </div>
+          }
+
+          @if (showRegistrationForm()) {
+            <form
+              class="sign-in-form absolute right-0 top-1/2 -translate-y-1/2 max-[640px]:!top-0 max-[640px]:!translate-y-0 w-[50%] max-[640px]:!w-full h-[85%] max-[640px]:!h-[78%] flex items-center justify-center flex-col rounded-tr-[30px] rounded-br-[30px] max-[640px]:!rounded-none"
+              (submit)="handleSubmit($event)"
+            >
+              <div
+                class="regis-form-contain absolute w-full h-fit px-4 max-[640px]:!px-6 slide-in-x"
+              >
+                <div class="input-fields relative w-full h-fit mb-[30px] max-[640px]:!mb-6">
+                  <div
+                    class="fields-name grid grid-cols-2 max-[640px]:!grid-cols-2 gap-[10px] max-[640px]:!gap-4 w-full h-fit"
+                  >
+                    <input
+                      type="text"
+                      placeholder="First Name"
+                      required
+                      class="login-input mb-0"
+                      (input)="handleRegisInputChange('fname', $any($event.target).value)"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Last Name"
+                      required
+                      class="login-input mb-0"
+                      (input)="handleRegisInputChange('lname', $any($event.target).value)"
+                    />
+                  </div>
+                  <input
+                    type="email"
+                    placeholder="Email Address"
+                    required
+                    class="login-input"
+                    (input)="handleRegisInputChange('email', $any($event.target).value)"
+                  />
+                  <div class="input-box">
+                    <input
+                      type="password"
+                      placeholder="Password"
+                      required
+                      class="login-input !mb-0"
+                      (input)="handleRegisInputChange('pwd', $any($event.target).value)"
+                    />
+                  </div>
+                </div>
+
+                <div
+                  class="argeeTerms relative flex items-center w-full h-fit mb-[30px] max-[640px]:!mb-[1.8rem]"
+                >
+                  <label
+                    class="terms relative cursor-pointer text-[14px] max-[640px]:!text-[0.75rem] flex items-center select-none text-[#8a8a8a] font-[var(--font-open-sans)] font-light"
+                  >
+                    <input
+                      type="checkbox"
+                      class="checkbox-input"
+                      (change)="isAgree.set(!isAgree())"
+                    />
+                    <span class="checkmark"></span>I have read and agree to the&nbsp;
+                    <a href="/" class="link-note-a">terms of service</a>
+                  </label>
+                </div>
+
+                <input
+                  type="submit"
+                  value="continue"
+                  class="login-submit-btn"
+                  [disabled]="!isRegisFormValid()"
+                />
+
+                <div class="link-wrapper">
+                  <a href="/" class="privacy">Privacy Policy</a>
+                  <span class="link-note">
+                    Already have a Next In account?&nbsp;
+                    <a
+                      href="/"
+                      class="link-note-a"
+                      (click)="toggleForm(true); $event.preventDefault()"
+                      >Sign In</a
+                    >
+                  </span>
+                  <span
+                    class="back-to-methods mt-3 text-white underline decoration-[0.5px] underline-offset-[3px] cursor-pointer hover:no-underline"
+                    (click)="handleBackToMethodRegisClick()"
+                  >
+                    Back to all methods
+                  </span>
+                </div>
+              </div>
+            </form>
+          }
+
+          <div class="banner text-banner sign-up-active">
+            <div class="banner-content">
+              <div class="text">
+                <h2>{{ isSignIn() ? 'Start Your Journey.' : 'Create New Account.' }}</h2>
+                <p>
+                  {{
+                    showRegistrationForm()
+                      ? 'Fill in your personal details'
+                      : 'Choose your sign up method'
+                  }}
+                </p>
+              </div>
+              @if (showRegistrationForm()) {
+                <button
+                  type="button"
+                  class="back-to-method-regis"
+                  (click)="handleBackToMethodRegisClick()"
+                >
+                  <span class="ph--arrow-left-thin icon"></span>
+                </button>
+              }
+            </div>
+          </div>
+        </section>
+      }
+    </div>
+  </div>
+</div>
