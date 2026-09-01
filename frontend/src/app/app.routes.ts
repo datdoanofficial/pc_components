@@ -21,4 +21,16 @@ export const routes: Routes = [
     path: 'contact',
     loadComponent: () => import('./pages/contact/contact.component').then((m) => m.ContactComponent),
   },
+  {
+    path: 'login',
+    loadComponent: () => import('./pages/login/login.component').then((m) => m.LoginComponent),
+  },
+  {
+    path: 'cart',
+    loadComponent: () => import('./pages/cart/cart.component').then((m) => m.CartComponent),
+  },
+  {
+    path: 'product-details',
+    loadComponent: () => import('./pages/product-details/product-details.component').then((m) => m.ProductDetailsComponent),
+  },
 ];
