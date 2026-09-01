@@ -1,0 +1,349 @@
+/* ===== reusable input/button styles (thay cho các class lặp input trong SCSS gốc) ===== */
+.login-input {
+  font-family: var(--font-open-sans);
+  font-weight: 300;
+  box-sizing: border-box;
+  padding: 0 30px;
+  width: 100%;
+  height: 60px;
+  outline: none;
+  color: #fff;
+  font-size: 14px;
+  border: 1px solid #3a3a3a;
+  background: none;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  transition: 0.5s;
+}
+.login-input:focus {
+  border: 1px solid #8a8a8a;
+}
+.login-input::placeholder {
+  color: #6a6a6a;
+}
+
+@media screen and (max-width: 640px) {
+  .login-input {
+    padding: 0 1.4rem;
+    height: 3.3rem;
+    font-size: 0.8rem;
+    border-radius: 0.5rem;
+    margin-bottom: 0.8rem;
+  }
+}
+
+.login-submit-btn {
+  position: relative;
+  width: 100%;
+  height: 60px;
+  font-family: var(--font-open-sans);
+  font-weight: 300;
+  background: var(--primary-color);
+  outline: none;
+  border: none;
+  font-size: 14px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 30px;
+  transition: 0.5s;
+  cursor: pointer;
+}
+.login-submit-btn:hover {
+  background: var(--hover-color);
+}
+.login-submit-btn:disabled {
+  background-color: var(--hover-color);
+  cursor: not-allowed;
+}
+
+@media screen and (max-width: 640px) {
+  .login-submit-btn {
+    height: 3.3rem;
+    font-size: 0.8rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.social-icon {
+  width: 100%;
+  border-radius: 5px;
+  filter: brightness(100%);
+  transition: 0.5s;
+}
+.social-icon:hover {
+  filter: brightness(80%);
+}
+
+.checkbox-input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+  appearance: none;
+  margin: 0;
+  padding: 0;
+}
+.checkmark {
+  position: relative;
+  margin-right: 10px;
+  height: 18px;
+  width: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  border: 1px solid #e2e2e2;
+  border-radius: 3px;
+  transition: 0.2s all;
+}
+.checkbox-input:checked ~ .checkmark {
+  background-color: var(--primary-color);
+  border: none;
+}
+.checkmark::after {
+  content: '';
+  position: absolute;
+  top: 10%;
+  transform: translateY(-50%) rotate(45deg);
+  width: 4px;
+  height: 8px;
+  border: solid #fff;
+  border-width: 0 1px 1px 0;
+  background: transparent;
+  display: none;
+}
+.checkbox-input:checked ~ .checkmark::after {
+  display: block;
+}
+
+.link-wrapper {
+  position: relative;
+  font-family: var(--font-open-sans);
+  font-weight: 300;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  color: #8a8a8a;
+}
+.link-wrapper .privacy {
+  color: #fff;
+  text-decoration-thickness: 0.7px;
+  text-underline-offset: 3px;
+  margin-bottom: 20px;
+}
+.link-wrapper .privacy:hover {
+  text-decoration: none;
+}
+.link-wrapper .link-note-a {
+  color: #fff;
+  text-decoration-thickness: 0.7px;
+  text-underline-offset: 3px;
+}
+.link-wrapper .link-note-a:hover {
+  text-decoration: none;
+}
+
+@media screen and (max-width: 640px) {
+  .link-wrapper {
+    font-size: 0.8rem;
+  }
+}
+
+.regis-link,
+.email-regis {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  background: #2a2a2a;
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--font-open-sans);
+  font-weight: 300;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.regis-link:hover {
+  outline: 1px solid #5a5a5a;
+  outline-offset: 2px;
+}
+.regis-icon-img {
+  margin-right: 30px;
+  width: 25%;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+@media screen and (max-width: 640px) {
+  .regis-link,
+  .email-regis {
+    margin-bottom: 1.2rem;
+    border-radius: 0.4rem;
+    font-size: 0.75rem;
+  }
+  .regis-icon-img {
+    margin-right: 1.5rem;
+  }
+}
+
+.code-input {
+  width: 45px;
+  height: 60px;
+  text-align: center;
+  font-size: 24px;
+  background: none;
+  outline: none;
+  border: 1px solid #3a3a3a;
+  border-radius: 10px;
+  color: #fff;
+}
+.code-input:focus {
+  border: 1px solid #8a8a8a;
+}
+
+@media screen and (max-width: 640px) {
+  .code-input {
+    width: 2.4rem;
+    height: 3.3rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+  }
+}
+
+/* ===== banner (panel ảnh bên trái) ===== */
+.banner {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 50%; /* = đúng bằng width của form, nên banner luôn chạm sát mép form */
+  transform: translateY(-50%);
+  background-image: url(/images/login-page/banner.webp);
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  height: 115%;
+  border-radius: 20px;
+}
+.banner .text {
+  position: absolute;
+  left: 10%;
+  bottom: 30%;
+  height: fit-content;
+  color: #fff;
+  font-family: var(--font-open-sans);
+  font-weight: 300;
+  font-size: 16px;
+}
+.banner .text h2 {
+  font-weight: 500;
+  margin-bottom: 20px;
+  font-size: 25px;
+}
+
+.back-to-method-regis {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  background: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  outline: none;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.back-to-method-regis .icon {
+  font-size: 24px;
+  color: #5a5a5a;
+}
+
+.banner-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* tránh text tràn ra ngoài bo góc khi trượt vào */
+}
+
+/* Banner text slide-in bằng CSS thuần, thay cho GSAP */
+.banner-content .text,
+.banner-content .back-to-method-regis {
+  animation: bannerTextIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes bannerTextIn {
+  from {
+    transform: translateY(30%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+/* Riêng hướng slide cho sign-up (từ trên xuống thay vì từ dưới lên) */
+.banner.sign-up-active .banner-content .text {
+  animation-name: bannerTextInReverse;
+}
+
+@keyframes bannerTextInReverse {
+  from {
+    transform: translateY(-30%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+/* Nút back to method: scale-in bằng CSS thay cho gsap back.out */
+.back-to-method-regis {
+  animation: backBtnScaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes backBtnScaleIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .banner {
+    border-radius: 0.6rem;
+  }
+}
+@media screen and (max-width: 640px) {
+  .banner {
+    display: none;
+  } /* banner ẩn hoàn toàn trên mobile — layout gốc chuyển sang full-width form */
+}
+
+/* Slide-in mượt khi form mount (mỗi lần Angular @if tạo lại DOM sẽ tự chạy 1 lần) */
+.slide-in-x {
+  animation: slideInX 0.5s ease;
+}
+@keyframes slideInX {
+  from {
+    transform: translateX(-10%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}

@@ -1,5 +1,9 @@
-<app-navbar />
+@if (!isLoginPage()) {
+  <app-navbar />
+}
+
 <router-outlet />
-@if (!isHomePage()) {
+
+@if (!isLoginPage() && !isHomePage()) {
   <app-footer />
 }
