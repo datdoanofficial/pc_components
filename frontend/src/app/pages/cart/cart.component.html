@@ -1,0 +1,140 @@
+<div
+  class="cart relative w-full h-full font-[var(--font-open-sans)] pt-[4.2rem] px-[3.5rem] pb-12 max-[1240px]:px-10 max-[1024px]:px-8 max-[900px]:px-8 max-[768px]:pt-20 max-[768px]:px-12 max-[576px]:px-8 max-[480px]:px-6 max-[375px]:px-4"
+>
+  <h1
+    class="text-[1.5rem] max-[1240px]:text-[1.4rem] max-[1024px]:text-[1.3rem] font-normal mb-6 text-white"
+  >
+    Your Cart
+  </h1>
+
+  <div class="cart-wrapper flex max-[768px]:flex-col">
+    <!-- cart inner -->
+    <div class="cart-inner w-full">
+      @if (cartProducts().length === 0) {
+        <div class="empty-cart-message w-full flex flex-col items-center font-light pt-4 pb-12">
+          <img
+            src="/images/cart-page/aww.webp"
+            alt="Empty Cart"
+            class="w-[7%] object-cover"
+          />
+          <p class="text-[1.1rem] mt-4">Your cart is empty.</p>
+          <a
+            href="/store"
+            class="mt-4 block px-[1.4rem] py-[0.6rem] bg-[var(--primary-color)] text-[0.4rem] text-[var(--text-color)] no-underline font-light uppercase rounded-2xl transition duration-500 hover:bg-[var(--hover-color)]"
+          >
+            discover more
+          </a>
+        </div>
+      } @else {
+        <div class="cart-contain w-full">
+          @for (product of cartProducts(); track product.id; let i = $index) {
+            <div
+              class="cart-item relative w-full h-24 bg-[#161616] mt-[0.7rem] first:mt-0 text-[0.5rem] flex items-center rounded-2xl pl-2 pr-4 py-2 max-[768px]:h-28 max-[480px]:h-28 max-[480px]:mt-4"
+            >
+              <img
+                [src]="product.image"
+                [alt]="product.name"
+                class="mr-2 w-[25%] max-[768px]:w-[28%] object-cover rounded-xl"
+              />
+
+              <div class="product-details flex justify-between w-full h-full">
+                <!-- part-1 -->
+                <div class="part-1 w-full flex flex-col justify-center">
+                  <div
+                    class="name max-w-full text-[0.6rem] max-[768px]:text-[0.65rem] max-[480px]:text-[0.55rem] max-[480px]:leading-4 font-light text-[var(--text-color)] mb-[0.6rem] max-[480px]:mb-[0.7rem]"
+                  >
+                    {{ product.name }}
+                  </div>
+                  <div
+                    class="brand font-light text-[0.5rem] max-[768px]:text-[0.65rem] max-[480px]:text-[0.6rem] text-[var(--text-color)]"
+                  >
+                    <span class="text-[#8a8a8a] mr-[0.2rem]">Brand:</span>{{ product.brand }}
+                  </div>
+                  <div
+                    class="guarantee font-light text-[0.5rem] max-[768px]:text-[0.65rem] max-[480px]:text-[0.6rem] text-[var(--text-color)] mt-[0.4rem]"
+                  >
+                    <span class="text-[#8a8a8a] mr-[0.2rem]">Guarantee:</span
+                    >{{ product.guarantee }}
+                  </div>
+                </div>
+
+                <!-- part-2 -->
+                <div
+                  class="part-2 ml-4 w-12 max-[768px]:w-16 flex flex-col justify-center items-center"
+                >
+                  <div
+                    class="price text-[0.7rem] max-[768px]:text-[0.8rem] text-[var(--primary-color)]"
+                  >
+                    ${{ product.price.toFixed(2) }}
+                  </div>
+                  <div class="quantity-toggle mt-6 w-full">
+                    <app-quantity-btn
+                      [showTitle]="false"
+                      [initialQuantity]="quantities()[i]"
+                      (quantityChange)="handleQuantityChange(product.id, $event)"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- remove btn -->
+              <div
+                class="remove-toggle w-[1.4rem] max-[480px]:w-7 aspect-square flex absolute -right-2 -top-2 justify-center items-center bg-[#2a2a2a] rounded-full transition duration-500 cursor-pointer hover:bg-[var(--primary-color)]"
+                (click)="handleRemoveProduct(product.id)"
+              >
+                <span
+                  class="fluent--delete-48-regular text-[0.6rem] max-[480px]:text-[0.8rem]"
+                ></span>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- checkout contain -->
+    @if (cartProducts().length > 0) {
+      <div
+        class="checkout-contain w-2/5 max-[900px]:w-[48%] max-[768px]:w-full h-fit p-4 max-[768px]:p-6 ml-6 max-[900px]:ml-4 max-[768px]:ml-0 max-[768px]:mt-4 font-light text-[0.5rem] bg-[#161616] rounded-2xl"
+      >
+        <div class="total-price w-full flex items-center justify-between">
+          <h2 class="font-normal text-[0.8rem] max-[900px]:text-[0.9rem] max-[768px]:text-[1rem]">
+            Total:
+          </h2>
+          <h2
+            class="price font-normal text-[0.8rem] max-[900px]:text-[0.9rem] max-[768px]:text-[1rem] text-[var(--primary-color)]"
+          >
+            ${{ totalPrice().toFixed(2) }}
+          </h2>
+        </div>
+
+        <p
+          class="total-items mt-[0.3rem] max-[900px]:mt-[0.4rem] max-[768px]:mt-[0.8rem] max-[768px]:text-[0.6rem]"
+        >
+          {{ cartProducts().length }} Items
+        </p>
+
+        <button
+          class="proceed-checkout w-full h-[1.6rem] max-[900px]:h-[1.8rem] max-[768px]:h-8 mt-[0.8rem] max-[768px]:mt-4 text-[0.4rem] max-[900px]:text-[0.45rem] max-[768px]:text-[0.55rem] rounded-full border-none outline-none uppercase bg-[var(--primary-color)] text-[var(--text-color)] transition duration-500 cursor-pointer hover:bg-[var(--hover-color)]"
+        >
+          Proceed to checkout
+        </button>
+
+        <div
+          class="discount w-full h-[1.6rem] max-[900px]:h-[1.8rem] max-[768px]:h-8 flex justify-between items-center px-[0.3rem] mt-2 text-[0.4rem] max-[900px]:text-[0.45rem] max-[768px]:text-[0.55rem] bg-[#2a2a2a] rounded-full"
+        >
+          <input
+            type="text"
+            placeholder="Discount code"
+            class="w-[65%] h-[80%] capitalize bg-transparent border-none outline-none text-[var(--text-color)] px-2 max-[768px]:px-4 font-light rounded-full"
+          />
+          <button
+            class="apply-btn w-[35%] max-[768px]:w-2/5 h-[80%] border-none outline-none bg-black rounded-full font-light text-[var(--text-color)] uppercase transition duration-500 cursor-pointer hover:bg-[var(--primary-color)]"
+          >
+            Apply
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>
