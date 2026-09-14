@@ -1,19 +1,16 @@
-import { Component, ElementRef, afterNextRender, computed, signal, viewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  afterNextRender,
+  computed,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
+import { RouterLink } from '@angular/router';
 import gsap from 'gsap';
-
-interface DemoProduct {
-  name: string;
-  price: string;
-  logo: string;
-  image: string;
-}
-
-const DEMO_PRODUCT: DemoProduct = {
-  name: 'AORUS GeForce RTX™ 4080 16GB XTREME WATERFORCE',
-  price: '$1499.00',
-  logo: '/images/products/prd_logo_demo.webp',
-  image: '/images/products/aorus_geforce_rtx4080_xtreme_waterforce.webp',
-};
+import { ProductService } from '../../core/services/product.service';
+import { Product } from '../../core/models/product.model';
 
 const CATEGORY_FILTERS = [
   'Desktop Computer',
@@ -37,12 +34,33 @@ const COMPONENT_FILTERS = [
   'Custom Liquid Cooling',
 ];
 
+/**
+ * Ánh xạ nhãn hiển thị trên UI -> giá trị `category` thật sự lưu trong DB (Product.category).
+ * - `null`  = nhãn này gộp nhiều loại sản phẩm, hiện tại show tất cả (vì mọi sp seed đều là PC Components).
+ * - không có key trong map = nhãn này chưa có sản phẩm tương ứng trong DB (Desktop Computer, Monitors...
+ *   là các loại sp bạn chưa seed), chọn vào sẽ hợp lý khi ra danh sách rỗng cho tới khi có data thật.
+ * - có key = khớp trực tiếp với cột category trong bảng products.
+ */
+const CATEGORY_VALUE_MAP: Record<string, string | null> = {
+  'PC Components': null,
+  'CPUs / Processors': 'CPU',
+  Motherboards: 'Mainboard',
+  'GPUs / Graphics Cards': 'GPU',
+  'Memory / RAM': 'RAM',
+  'Hard Drives & SSDs': 'SSD',
+  Cases: 'Case',
+  'Power Supplies': 'PSU',
+  'Fans & Cooling': 'Cooling',
+  'Custom Liquid Cooling': 'Cooling',
+};
+
 const PRICE_MIN = 100;
 const PRICE_MAX = 9990;
 
 @Component({
   selector: 'app-store',
   standalone: true,
+  imports: [RouterLink],
   templateUrl: './store.component.html',
   styleUrl: './store.component.css',
 })
@@ -51,35 +69,85 @@ export class StoreComponent {
   private showcase02 = viewChild<ElementRef<HTMLElement>>('showcase02');
   private showcase03 = viewChild<ElementRef<HTMLElement>>('showcase03');
   private filterPanel = viewChild<ElementRef<HTMLElement>>('filterPanel');
+  private priceTrack = viewChild<ElementRef<HTMLElement>>('priceTrack');
 
-  readonly product = DEMO_PRODUCT;
-  readonly items = Array.from({ length: 20 });
+  private productService = inject(ProductService);
+
+  // Danh sách sản phẩm thật lấy từ backend, thay cho mảng giả trước đây
+  readonly allProducts = signal<Product[]>([]);
+  readonly isLoading = signal(true);
+  readonly errorMessage = signal<string | null>(null);
+
   readonly categoryFilters = CATEGORY_FILTERS;
   readonly componentFilters = COMPONENT_FILTERS;
   readonly priceMin = PRICE_MIN;
   readonly priceMax = PRICE_MAX;
 
-  displayedItems = signal(9);
+  displayedCount = signal(9);
   activeFilterList1 = signal<string | null>(null);
   activeFilterList2 = signal<string | null>(null);
   isFilterVisible = signal(false);
 
-  values = signal<[number, number]>([100, 9900]);
+  values = signal<[number, number]>([PRICE_MIN, PRICE_MAX]);
+
+  // Lọc theo category (nếu có chọn) + khoảng giá đang chọn.
+  // Ưu tiên filter danh sách dưới (Filter By - khớp component), nếu không chọn thì dùng danh sách trên (Categories).
+  readonly filteredProducts = computed(() => {
+    const [min, max] = this.values();
+    const activeLabel = this.activeFilterList2() ?? this.activeFilterList1();
+
+    return this.allProducts().filter((p) => {
+      const inPriceRange = p.price >= min && p.price <= max;
+
+      if (!activeLabel) {
+        return inPriceRange;
+      }
+
+      // 'PC Components' -> null (show tất cả); nhãn khác chưa có mapping -> undefined (chưa có sp loại này)
+      const mappedCategory = CATEGORY_VALUE_MAP[activeLabel];
+      if (mappedCategory === null) {
+        return inPriceRange;
+      }
+      if (mappedCategory === undefined) {
+        return false;
+      }
+      return inPriceRange && p.category?.toLowerCase() === mappedCategory.toLowerCase();
+    });
+  });
+
+  readonly visibleProducts = computed(() =>
+    this.filteredProducts().slice(0, this.displayedCount()),
+  );
 
   filterPositionClass = computed(() =>
     this.isFilterVisible() ? 'max-[640px]:right-0' : 'max-[640px]:-right-full',
   );
 
-  trackBackground = computed(() => {
-    const [min, max] = this.values();
-    const minPct = ((min - PRICE_MIN) / (PRICE_MAX - PRICE_MIN)) * 100;
-    const maxPct = ((max - PRICE_MIN) / (PRICE_MAX - PRICE_MIN)) * 100;
-    return `linear-gradient(to right, #fff 0%, #fff ${minPct}%, #eb7e63 ${minPct}%, #eb7e63 ${maxPct}%, #fff ${maxPct}%, #fff 100%)`;
-  });
+  // % vị trí của 2 chấm tròn trên track, tính theo CÙNG 1 công thức duy nhất
+  // (không còn dùng linear-gradient riêng lẻ như trước -> đảm bảo luôn khớp với vị trí chấm tròn thật)
+  readonly minPercent = computed(
+    () => ((this.values()[0] - PRICE_MIN) / (PRICE_MAX - PRICE_MIN)) * 100,
+  );
+  readonly maxPercent = computed(
+    () => ((this.values()[1] - PRICE_MIN) / (PRICE_MAX - PRICE_MIN)) * 100,
+  );
+  readonly rangeWidthPercent = computed(() => this.maxPercent() - this.minPercent());
 
   constructor() {
-    // Parallax scroll + click-outside listeners only make sense in the browser
-    // (this project renders with Angular SSR), so we set them up post-render.
+    // Gọi API lấy danh sách sản phẩm thật từ backend Spring Boot
+    this.productService.getProducts().subscribe({
+      next: (products) => {
+        this.allProducts.set(products);
+        this.isLoading.set(false);
+      },
+      error: (err) => {
+        console.error('Không thể tải danh sách sản phẩm:', err);
+        this.errorMessage.set('Không thể tải sản phẩm. Vui lòng thử lại sau.');
+        this.isLoading.set(false);
+      },
+    });
+
+    // Parallax scroll + click-outside listeners chỉ chạy trên browser
     afterNextRender(() => {
       const handleScroll = () => {
         const value = window.scrollY;
@@ -104,14 +172,18 @@ export class StoreComponent {
 
   handleFilterClickList1(filter: string): void {
     this.activeFilterList1.update((prev) => (prev === filter ? null : filter));
+    this.activeFilterList2.set(null); // chỉ 1 filter category active tại 1 thời điểm
+    this.displayedCount.set(9);
   }
 
   handleFilterClickList2(filter: string): void {
     this.activeFilterList2.update((prev) => (prev === filter ? null : filter));
+    this.activeFilterList1.set(null); // chỉ 1 filter category active tại 1 thời điểm
+    this.displayedCount.set(9);
   }
 
   handleLoadMore(): void {
-    this.displayedItems.update((count) => count + 9);
+    this.displayedCount.update((count) => count + 9);
   }
 
   toggleFilter(): void {
@@ -124,20 +196,45 @@ export class StoreComponent {
     document.body.style.overflow = 'unset';
   }
 
-  handleMinRangeInput(raw: string): void {
-    const next = Number(raw);
-    const [, max] = this.values();
-    if (max - next >= 1000) {
-      this.values.set([next, max]);
-    }
-  }
+  private readonly MIN_GAP = 100;
+  private readonly STEP = 50;
 
-  handleMaxRangeInput(raw: string): void {
-    const next = Number(raw);
-    const [min] = this.values();
-    if (next - min >= 1000) {
-      this.values.set([min, next]);
-    }
+  /** Kéo 1 trong 2 chấm tròn trên thanh giá. Gọi từ (pointerdown) trên chấm tròn. */
+  startPriceDrag(event: PointerEvent, thumb: 'min' | 'max'): void {
+    event.preventDefault();
+    const track = this.priceTrack()?.nativeElement;
+    if (!track) return;
+
+    const rect = track.getBoundingClientRect();
+    document.body.style.userSelect = 'none';
+
+    const updateFromClientX = (clientX: number) => {
+      const ratio = Math.min(Math.max((clientX - rect.left) / rect.width, 0), 1);
+      const rawValue = PRICE_MIN + ratio * (PRICE_MAX - PRICE_MIN);
+      const stepped = Math.round(rawValue / this.STEP) * this.STEP;
+
+      const [min, max] = this.values();
+      if (thumb === 'min') {
+        // Không bao giờ vượt quá (max - MIN_GAP), không bao giờ thấp hơn PRICE_MIN
+        const next = Math.min(Math.max(stepped, PRICE_MIN), max - this.MIN_GAP);
+        this.values.set([next, max]);
+      } else {
+        // Không bao giờ thấp hơn (min + MIN_GAP), không bao giờ vượt quá PRICE_MAX
+        const next = Math.max(Math.min(stepped, PRICE_MAX), min + this.MIN_GAP);
+        this.values.set([min, next]);
+      }
+    };
+
+    const onPointerMove = (moveEvent: PointerEvent) => updateFromClientX(moveEvent.clientX);
+
+    const onPointerUp = () => {
+      document.body.style.userSelect = '';
+      document.removeEventListener('pointermove', onPointerMove);
+      document.removeEventListener('pointerup', onPointerUp);
+    };
+
+    document.addEventListener('pointermove', onPointerMove);
+    document.addEventListener('pointerup', onPointerUp);
   }
 
   handleMinInputChange(raw: string): void {
