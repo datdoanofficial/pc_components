@@ -39,20 +39,28 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('imgEl') imgEl?: ElementRef<HTMLImageElement>;
   @ViewChildren('numberEl') numberEls?: QueryList<ElementRef<HTMLElement>>;
 
-  activeIndex = signal(3);
+  // index 0 = Desktop Computers -> hiển thị đầu tiên khi load trang, tương ứng số "01"
+  activeIndex = signal(0);
   animationDirection = signal<'up' | 'down'>('up');
 
+  /**
+   * Thứ tự category (0-6), khớp trực tiếp 1-1 với mảng images bên dưới và switch-case của `content`.
+   * Trình tự: Desktop Computers -> PC Components -> Monitors -> Peripherals -> Laptops -> Playstation/Xbox -> Ergonomic Chairs
+   */
   private images = [
-    '/images/landing-page/pc-aio.webp',
-    '/images/landing-page/laptop.webp',
-    '/images/landing-page/keyboard.webp',
-    '/images/landing-page/ps.webp',
-    '/images/landing-page/chair.webp',
+    '/images/landing-page/pc-aio.webp', // 0 Desktop Computers
+    '/images/landing-page/gpu.webp', // 1 PC Components
+    '/images/landing-page/monitor.webp', // 2 Monitors
+    '/images/landing-page/keyboard.webp', // 3 Computer Peripherals
+    '/images/landing-page/laptop.webp', // 4 Laptops & Notebooks
+    '/images/landing-page/ps.webp', // 5 Playstation & Xbox Consoles
+    '/images/landing-page/chair.webp', // 6 Ergonomic & Gaming Chairs
   ];
 
-  currentImage = computed(() => this.images[(this.activeIndex() + 2) % 5]);
+  // Map trực tiếp theo activeIndex, không còn công thức lệch (+2 % 7) như trước -> ảnh luôn đúng category
+  currentImage = computed(() => this.images[this.activeIndex()]);
 
-  private numbers = [1, 2, 3, 4, 5];
+  private numbers = [1, 2, 3, 4, 5, 6, 7];
   sortedNumbers = computed(() => {
     const idx = this.activeIndex();
     return [...this.numbers.slice(idx), ...this.numbers.slice(0, idx)];
@@ -62,31 +70,27 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     switch (this.activeIndex()) {
       case 0:
         return {
-          title: 'Computer Pheripherals',
-          description:
-            'Think of computer peripherals as anything that connects to your computer system to add functionality for work or entertainment. Most computer peripherals are available at Next In.',
-        };
-      case 1:
-        return {
-          title: 'Playstation',
-          character: '&',
-          title1: 'XBOX Consoles',
-          description:
-            'Gaming has revolutionized the way people relax. No matter your age or where you are from, all you need is a console, and you can play entertaining video games in a matter of seconds. ',
-        };
-      case 2:
-        return {
-          title: 'Ergonomic',
-          character: '&',
-          title1: 'Gaming Chairs',
-          description:
-            'You can choose the best computer chairs offer features that enhance comfort and ergonomics while working at a computer for long hours  and every user can sit comfortably at work.',
-        };
-      case 3:
-        return {
           title: 'Desktop Computers',
           description:
             'Buying a desktop computer has never been easier at Next In. From gaming, all-in-ones or workstations and servers, we have a large selection of desktops that will be right for you.',
+        };
+      case 1:
+        return {
+          title: 'Hardware Components',
+          description:
+            'PC components are the essential building blocks of every computer, from the CPU and GPU to RAM and storage. Next In stocks a curated range of top components to help you build your next rig or upgrade the one you already have.',
+        };
+      case 2:
+        return {
+          title: 'Monitors',
+          description:
+            'A great display changes the way you work and play, and Next In carries monitors built for every kind of user. Browse crisp 4K panels, ultra-wide curves, and high-refresh gaming screens designed to make every pixel count.',
+        };
+      case 3:
+        return {
+          title: 'Computer Pheripherals',
+          description:
+            'Think of computer peripherals as anything that connects to your computer system to add functionality for work or entertainment. Most computer peripherals are available at Next In.',
         };
       case 4:
         return {
@@ -96,6 +100,23 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           description:
             'You will discover a wide assortment of laptops at impressive offers. Next In will help you find the best laptop for you with our selection of laptop computers for work & play.',
         };
+      case 5:
+        return {
+          title: 'Playstation',
+          character: '&',
+          title1: 'XBOX Consoles',
+          description:
+            'Gaming has revolutionized the way people relax. No matter your age or where you are from, all you need is a console, and you can play entertaining video games in a matter of seconds. ',
+        };
+      case 6:
+        return {
+          title: 'Ergonomic',
+          character: '&',
+          title1: 'Gaming Chairs',
+          description:
+            'You can choose the best computer chairs offer features that enhance comfort and ergonomics while working at a computer for long hours  and every user can sit comfortably at work.',
+        };
+
       default:
         return {
           title: 'Desktop Computers',
@@ -139,17 +160,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private startInterval(): void {
     if (this.intervalId) clearInterval(this.intervalId);
     this.intervalId = setInterval(() => {
-      this.transitionTo((this.activeIndex() + 1) % 5, 'up');
+      this.transitionTo((this.activeIndex() + 1) % 7, 'up');
     }, 8000);
   }
 
   handleLeftClick(): void {
-    this.transitionTo((this.activeIndex() - 1 + 5) % 5, 'down');
+    this.transitionTo((this.activeIndex() - 1 + 7) % 7, 'down');
     this.startInterval();
   }
 
   handleRightClick(): void {
-    this.transitionTo((this.activeIndex() + 1) % 5, 'up');
+    this.transitionTo((this.activeIndex() + 1) % 7, 'up');
     this.startInterval();
   }
 

@@ -83,62 +83,101 @@
         </button>
       </div>
 
+      <!-- loading state -->
+      @if (isLoading()) {
+        <div
+          class="w-full py-[3rem] text-center font-[var(--font-open-sans)] text-[0.7rem] text-[#8a8a8a]"
+        >
+          Đang tải sản phẩm...
+        </div>
+      }
+
+      <!-- error state -->
+      @if (errorMessage()) {
+        <div
+          class="w-full py-[3rem] text-center font-[var(--font-open-sans)] text-[0.7rem] text-[#eb7e63]"
+        >
+          {{ errorMessage() }}
+        </div>
+      }
+
+      <!-- empty state -->
+      @if (!isLoading() && !errorMessage() && filteredProducts().length === 0) {
+        <div
+          class="w-full py-[3rem] text-center font-[var(--font-open-sans)] text-[0.7rem] text-[#8a8a8a]"
+        >
+          Không tìm thấy sản phẩm phù hợp.
+        </div>
+      }
+
       <!-- product items -->
-      <div
-        class="relative w-full grid grid-cols-3 max-[1240px]:grid-cols-2 max-[1024px]:grid-cols-2 max-[820px]:grid-cols-2 max-[640px]:grid-cols-2 gap-[1rem] max-[1240px]:gap-[1.5rem] max-[820px]:gap-[1rem] max-[320px]:grid-cols-1 max-[320px]:gap-[2.5rem]"
-      >
-        @for (item of items.slice(0, displayedItems()); track $index) {
-          <div class="flex flex-col items-center">
-            <!-- product card -->
-            <div
-              (mouseenter)="onCardEnter($event)"
-              (mouseleave)="onCardLeave($event)"
-              class="relative w-full aspect-[1/1.3] bg-[#101010] rounded-[0.8rem] overflow-hidden cursor-pointer"
-            >
+      @if (!isLoading() && !errorMessage() && filteredProducts().length > 0) {
+        <div
+          class="relative w-full grid grid-cols-3 max-[1240px]:grid-cols-2 max-[1024px]:grid-cols-2 max-[820px]:grid-cols-2 max-[640px]:grid-cols-2 gap-[1rem] max-[1240px]:gap-[1.5rem] max-[820px]:gap-[1rem] max-[320px]:grid-cols-1 max-[320px]:gap-[2.5rem]"
+        >
+          @for (product of visibleProducts(); track product.id) {
+            <div class="flex flex-col items-center">
+              <!-- product card -->
               <div
-                class="w-full h-[15%] px-[0.8rem] max-[1240px]:px-[1rem] flex items-end justify-between"
+                (mouseenter)="onCardEnter($event)"
+                (mouseleave)="onCardLeave($event)"
+                class="relative w-full aspect-[1/1.3] bg-[#101010] rounded-[0.8rem] overflow-hidden cursor-pointer"
               >
-                <div class="w-[45%]">
-                  <img [src]="product.logo" alt="" class="w-full object-cover" />
+                <div
+                  class="w-full h-[15%] px-[0.8rem] max-[1240px]:px-[1rem] flex items-end justify-between"
+                >
+                  <div
+                    class="w-[45%] font-[var(--font-open-sans)] text-[0.4rem] text-[#8a8a8a] uppercase"
+                  >
+                    {{ product.category }}
+                  </div>
+                  <button class="aspect-square h-[55%] border-none bg-transparent cursor-pointer">
+                    <span
+                      class="solar--heart-outline icon w-full h-full text-[#c4c4c4] transition duration-500 hover:text-[#6a6a6a]"
+                    ></span>
+                  </button>
                 </div>
-                <button class="aspect-square h-[55%] border-none bg-transparent cursor-pointer">
-                  <span
-                    class="solar--heart-outline icon w-full h-full text-[#c4c4c4] transition duration-500 hover:text-[#6a6a6a]"
-                  ></span>
+
+                <div class="mt-[0.5rem] w-[90%] mx-auto aspect-[1/0.8]">
+                  <img
+                    [src]="product.imageUrl"
+                    [alt]="product.name"
+                    class="w-full h-full object-contain"
+                    (error)="
+                      $any($event.target).src =
+                        'https://placehold.co/500x400/101010/6a6a6a?text=No+Image'
+                    "
+                  />
+                </div>
+
+                <button
+                  class="add-to-cart-btn absolute -bottom-[20%] left-1/2 -translate-x-1/2 flex justify-center items-center w-[70%] aspect-[3.2/1] bg-[#1a1a1a] rounded-[2rem] font-[var(--font-open-sans)] font-light text-[0.4rem] max-[640px]:text-[0.5rem] text-[var(--text-color)] uppercase transition-colors duration-500 cursor-pointer hover:bg-[#2a2a2a]"
+                >
+                  Add to cart
                 </button>
               </div>
 
-              <div class="mt-[0.5rem] w-[90%] mx-auto aspect-[1/0.8]">
-                <img [src]="product.image" alt="" class="w-full" />
-              </div>
-
-              <button
-                class="add-to-cart-btn absolute -bottom-[20%] left-1/2 -translate-x-1/2 flex justify-center items-center w-[70%] aspect-[3.2/1] bg-[#1a1a1a] rounded-[2rem] font-[var(--font-open-sans)] font-light text-[0.4rem] max-[640px]:text-[0.5rem] text-[var(--text-color)] uppercase transition-colors duration-500 cursor-pointer hover:bg-[#2a2a2a]"
-              >
-                Add to cart
-              </button>
-            </div>
-
-            <!-- product information -->
-            <div class="mt-[0.6rem] flex flex-col items-center font-[var(--font-open-sans)]">
-              <a
-                href="/product-details"
-                class="w-fit text-center text-[0.45rem] max-[1240px]:text-[0.55rem] max-[640px]:text-[0.65rem] font-light leading-[0.75rem] max-[1240px]:leading-[1rem] text-[#e2e2e2] no-underline transition duration-500 hover:text-[#6a6a6a]"
-              >
-                {{ product.name }}
-              </a>
-              <div
-                class="mt-[0.3rem] text-[0.5rem] max-[1240px]:text-[0.6rem] max-[640px]:text-[0.7rem] font-normal text-[var(--text-color)]"
-              >
-                {{ product.price }}
+              <!-- product information -->
+              <div class="mt-[0.6rem] flex flex-col items-center font-[var(--font-open-sans)]">
+                <a
+                  [routerLink]="['/product-details', product.id]"
+                  class="w-fit text-center text-[0.45rem] max-[1240px]:text-[0.55rem] max-[640px]:text-[0.65rem] font-light leading-[0.75rem] max-[1240px]:leading-[1rem] text-[#e2e2e2] no-underline transition duration-500 hover:text-[#6a6a6a]"
+                >
+                  {{ product.name }}
+                </a>
+                <div
+                  class="mt-[0.3rem] text-[0.5rem] max-[1240px]:text-[0.6rem] max-[640px]:text-[0.7rem] font-normal text-[var(--text-color)]"
+                >
+                  ${{ product.price.toFixed(2) }}
+                </div>
               </div>
             </div>
-          </div>
-        }
-      </div>
+          }
+        </div>
+      }
 
       <!-- load more -->
-      @if (displayedItems() < items.length) {
+      @if (displayedCount() < filteredProducts().length) {
         <button
           (click)="handleLoadMore()"
           class="relative mt-[2rem] mx-auto flex justify-center items-center w-[20%] max-[1240px]:w-[4.5rem] max-[768px]:w-[5rem] max-[576px]:w-[5.5rem] max-[375px]:w-[6rem] aspect-[2/0.65] bg-[var(--primary-color)] rounded-[1rem] font-[var(--font-open-sans)] font-light text-[0.4rem] text-[var(--text-color)] uppercase transition duration-500 cursor-pointer hover:bg-[var(--hover-color)]"
@@ -214,30 +253,32 @@
               >Price</span
             >
 
-            <div class="relative w-full h-[18px] flex items-center">
+            <div #priceTrack class="relative w-full h-[18px] flex items-center touch-none">
+              <!-- track nền -->
               <div
-                class="absolute w-full h-[4px] rounded-[4px] transition duration-500 pointer-events-none"
-                [style.background]="trackBackground()"
+                class="absolute w-full h-[4px] rounded-[4px] bg-white/25 pointer-events-none"
               ></div>
 
-              <input
-                type="range"
-                [min]="priceMin"
-                [max]="priceMax"
-                step="50"
-                [value]="values()[0]"
-                (input)="handleMinRangeInput($any($event.target).value)"
-                class="absolute w-full appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:w-[18px] [&::-webkit-slider-thumb]:h-[18px] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:outline [&::-webkit-slider-thumb]:outline-1 [&::-webkit-slider-thumb]:outline-[#eb7e63] [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:w-[18px] [&::-moz-range-thumb]:h-[18px] [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:border [&::-moz-range-thumb]:border-[#eb7e63]"
-              />
-              <input
-                type="range"
-                [min]="priceMin"
-                [max]="priceMax"
-                step="50"
-                [value]="values()[1]"
-                (input)="handleMaxRangeInput($any($event.target).value)"
-                class="absolute w-full appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:w-[18px] [&::-webkit-slider-thumb]:h-[18px] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:outline [&::-webkit-slider-thumb]:outline-1 [&::-webkit-slider-thumb]:outline-[#eb7e63] [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:w-[18px] [&::-moz-range-thumb]:h-[18px] [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:border [&::-moz-range-thumb]:border-[#eb7e63]"
-              />
+              <!-- track màu đỏ, luôn khớp chính xác giữa 2 chấm tròn vì dùng chung minPercent()/maxPercent() -->
+              <div
+                class="absolute h-[4px] rounded-[4px] bg-[#eb7e63] pointer-events-none"
+                [style.left.%]="minPercent()"
+                [style.width.%]="rangeWidthPercent()"
+              ></div>
+
+              <!-- chấm tròn min -->
+              <div
+                (pointerdown)="startPriceDrag($event, 'min')"
+                class="absolute w-[18px] h-[18px] -translate-x-1/2 rounded-full bg-white outline outline-1 outline-[#eb7e63] cursor-pointer touch-none"
+                [style.left.%]="minPercent()"
+              ></div>
+
+              <!-- chấm tròn max -->
+              <div
+                (pointerdown)="startPriceDrag($event, 'max')"
+                class="absolute w-[18px] h-[18px] -translate-x-1/2 rounded-full bg-white outline outline-1 outline-[#eb7e63] cursor-pointer touch-none"
+                [style.left.%]="maxPercent()"
+              ></div>
             </div>
 
             <div class="flex justify-between w-full">
